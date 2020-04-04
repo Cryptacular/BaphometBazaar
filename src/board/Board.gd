@@ -5,8 +5,6 @@ const TILE_SIZE = 32
 export (int) var width
 export (int) var height
 
-signal ingredient_matched
-
 var board = {}
 var available_tiles = [
 	preload("res://src/board/tiles/PentagramTile.tscn"),
@@ -46,8 +44,9 @@ func position_to_key(pos):
 
 func key_to_position(key):
 	var positions = key.split("x")
-	var x = positions[0]
-	var y = positions[1]
+	var x = int(positions[0])
+	var y = int(positions[1])
+	return Vector2(x, y)
 
 
 func create_cell(position, tile_scene, up = null, down = null, left = null, right = null):
