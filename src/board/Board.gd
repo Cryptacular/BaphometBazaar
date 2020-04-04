@@ -9,7 +9,10 @@ signal ingredient_matched
 
 var board = {}
 var available_tiles = [
-	preload("res://src/board/tiles/PentagramTile.tscn")
+	preload("res://src/board/tiles/PentagramTile.tscn"),
+	preload("res://src/board/tiles/VialRoundTile.tscn"),
+	preload("res://src/board/tiles/VialAngularTile.tscn"),
+	preload("res://src/board/tiles/TongueTile.tscn"),
 ]
 var tile_spawn = preload("res://src/board/tiles/TileSpawn.tscn")
 
