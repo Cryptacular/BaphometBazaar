@@ -16,10 +16,32 @@ var available_tiles = [
 ]
 var tile_spawn = preload("res://src/board/tiles/TileSpawn.tscn")
 
+enum states { INIT, IDLE, BUSY }
+
+var state = states.INIT
+
 
 func _ready():
 	randomize()
 	initalise_board()
+	state = states.IDLE
+
+
+func _process(delta: float):
+	if state == states.INIT:
+		pass
+	elif state == states.IDLE:
+		process_idle(delta)
+	elif state == states.BUSY:
+		process_busy(delta)
+
+
+func process_idle(_delta: float):
+	pass
+
+
+func process_busy(_delta: float):
+	pass
 
 
 func initalise_board():
@@ -45,39 +67,77 @@ func initalise_board():
 			board[position_to_key(pos)] = cell
 
 
-func position_to_key(pos):
+func position_to_key(pos: Vector2):
 	return str(pos.x) + "x" + str(pos.y)
 
 
-func key_to_position(key):
+func key_to_position(key: String):
 	var positions = key.split("x")
 	var x = int(positions[0])
 	var y = int(positions[1])
 	return Vector2(x, y)
 
 
-func create_cell(position, tile_scene, up = null, down = null, left = null, right = null):
+class Cell:
+	var _position: Vector2
+	var _tile: Node2D
+	var _up: Cell
+	var _down: Cell
+	var _left: Cell
+	var _right: Cell
+	
+	func _init(position: Vector2, 
+			tile: Node2D, 
+			up: Cell = null, 
+			down: Cell = null, 
+			left: Cell = null, 
+			right: Cell = null):
+		_position = position
+		_tile = tile
+		_up = up
+		_down = down
+		_left = left
+		_right = right
+	
+	func set_position(position: Vector2):
+		_position = position
+	
+	func set_tile(tile: Node2D):
+		_tile = tile
+	
+	func set_up(up: Cell):
+		_up = up
+	
+	func set_down(down: Cell):
+		_down = down
+	
+	func set_left(left: Cell):
+		_left = left
+	
+	func set_right(right: Cell):
+		_right = right
+
+
+func create_cell(position: Vector2, 
+			tile_scene: PackedScene, 
+			up: Cell = null, 
+			down: Cell = null, 
+			left: Cell = null, 
+			right: Cell = null):
 	var tile_instance = tile_scene.instance()
 	tile_instance.position = grid_to_pixel(position)
 	add_child(tile_instance)
 	
-	var cell = {
-		"position": position,
-		"tile": tile_instance,
-		"up": up,
-		"down": down,
-		"left": left,
-		"right": right
-	}
+	var cell = Cell.new(position, tile_instance, up, down, left, right)
 	
 	if up != null:
-		up.down = cell
+		up.set_down(cell)
 	if down != null:
-		down.up = cell
+		down.set_up(cell)
 	if left != null:
-		left.right = cell
+		left.set_right(cell)
 	if right != null:
-		right.left = cell
+		right.set_left(cell)
 	
 	return cell
 
