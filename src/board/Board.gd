@@ -4,8 +4,10 @@ const TILE_SIZE = 32
 
 export (int) var width
 export (int) var height
+export (Vector2) var player_initial_position
 
 var board = {}
+var player_tile = preload("res://src/board/tiles/Player.tscn")
 var available_tiles = [
 	preload("res://src/board/tiles/PentagramTile.tscn"),
 	preload("res://src/board/tiles/VialRoundTile.tscn"),
@@ -24,7 +26,12 @@ func initalise_board():
 	for x in width:
 		for y in height:
 			var pos = Vector2(x, y)
-			var tile_scene = get_random_tile()
+			var tile_scene
+			
+			if pos == player_initial_position:
+				tile_scene = player_tile
+			else:
+				tile_scene = get_random_tile()
 			
 			var up = null
 			var left = null
