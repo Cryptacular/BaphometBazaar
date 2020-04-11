@@ -2,23 +2,24 @@ extends Node2D
 
 const TILE_SIZE = 32
 
-export (int) var width
-export (int) var height
-export (Vector2) var player_initial_position
+var _width: int
+var _height: int
+var _player_initial_position: Vector2
+var _available_tiles: Array
 
 var board = {}
 var player_tile = preload("res://src/board/tiles/Player.tscn")
-var available_tiles = [
-	preload("res://src/board/tiles/PentagramTile.tscn"),
-	preload("res://src/board/tiles/VialRoundTile.tscn"),
-	preload("res://src/board/tiles/VialAngularTile.tscn"),
-	preload("res://src/board/tiles/TongueTile.tscn"),
-]
-var tile_spawn = preload("res://src/board/tiles/TileSpawn.tscn")
 
 enum states { INIT, IDLE, BUSY }
 
 var state = states.INIT
+
+
+func init(width: int, height: int, player_initial_position: Vector2, available_tiles: Array):
+	_width = width
+	_height = height
+	_player_initial_position = player_initial_position
+	_available_tiles = available_tiles
 
 
 func _ready():
@@ -45,12 +46,12 @@ func process_busy(_delta: float):
 
 
 func initalise_board():
-	for x in width:
-		for y in height:
+	for x in _width:
+		for y in _height:
 			var pos = Vector2(x, y)
 			var tile_scene
 			
-			if pos == player_initial_position:
+			if pos == _player_initial_position:
 				tile_scene = player_tile
 			else:
 				tile_scene = get_random_tile()
@@ -103,9 +104,9 @@ func create_cell(position: Vector2,
 
 
 func get_random_tile():
-	var number_of_tiles_available = available_tiles.size()
+	var number_of_tiles_available = _available_tiles.size()
 	var rand = floor(rand_range(0, number_of_tiles_available))
-	return available_tiles[rand]
+	return _available_tiles[rand]
 
 
 func grid_to_pixel(pos):
