@@ -9,4 +9,8 @@ script = ExtResource( 1 )
 position = Vector2( 16, 16 )
 region_rect = Rect2( 0, 0, 32, 32 )
 
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 16, 16 )
+
 [node name="MoveTween" type="Tween" parent="."]
