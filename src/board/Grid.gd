@@ -63,10 +63,14 @@ func move_player(dir: Vector2):
 func _swap_tiles(a: Vector2, b: Vector2):
 	if a == null or b == null:
 		return
-	if a.y >= len(_rows) or b.y >= len(_rows):
-		return
-	if a.x >= len(_rows[a.y]) or b.x >= len(_rows[b.y]):
-		return
+	if a.y >= len(_rows):
+		a.y = 0
+	if b.y >= len(_rows):
+		b.y = 0
+	if a.x >= len(_rows[a.y]):
+		a.x = 0
+	if b.x >= len(_rows[b.y]):
+		b.x = 0
 	
 	var a_cell: Cell = get_cell(a.x, a.y)
 	var b_cell: Cell = get_cell(b.x, b.y)
