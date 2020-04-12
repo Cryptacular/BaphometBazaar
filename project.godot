@@ -9,13 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "BaseTile",
+"language": "GDScript",
+"path": "res://src/board/tiles/BaseTile.gd"
+}, {
 "base": "Node",
 "class": "Cell",
 "language": "GDScript",
 "path": "res://src/board/Cell.gd"
+}, {
+"base": "Node",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://src/board/Grid.gd"
 } ]
 _global_script_class_icons={
-"Cell": ""
+"BaseTile": "",
+"Cell": "",
+"Grid": ""
 }
 
 [application]
@@ -28,6 +40,8 @@ config/icon="res://icon.png"
 
 window/size/width=640
 window/size/height=360
+window/size/test_width=1280
+window/size/test_height=720
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
