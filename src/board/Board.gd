@@ -62,8 +62,11 @@ func initalise_board():
 			else:
 				tile_scene = get_random_tile()
 			
-			var cell = create_cell(pos, tile_scene)
-			grid.set_cell(x, y, cell)
+			var tile = tile_scene.instance()
+			add_child(tile)
+			
+			var cell: Cell = grid.get_cell(x, y)
+			cell.set_tile(tile)
 
 
 func move_player(dir: Vector2):
@@ -79,15 +82,6 @@ func key_to_position(key: String):
 	var x = int(positions[0])
 	var y = int(positions[1])
 	return Vector2(x, y)
-
-
-func create_cell(position: Vector2, tile_scene: PackedScene):
-	var tile_instance = tile_scene.instance()
-	add_child(tile_instance)
-	
-	var cell = Cell.new(position, tile_instance)
-	
-	return cell
 
 
 func get_random_tile():

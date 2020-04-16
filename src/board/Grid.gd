@@ -18,6 +18,11 @@ func _init(width: int, height: int):
 			cells.append(null)
 		
 		_rows.append(cells)
+	
+	for y in height:
+		for x in width:
+			var cell = Cell.new()
+			set_cell(x, y, cell)
 
 
 func get_cell(x: int, y: int):
@@ -25,6 +30,8 @@ func get_cell(x: int, y: int):
 
 
 func set_cell(x: int, y: int, cell: Cell):
+	cell.set_position(x, y)
+	
 	var left: Cell
 	var right: Cell
 	var up: Cell
@@ -32,12 +39,16 @@ func set_cell(x: int, y: int, cell: Cell):
 	
 	if y > 0:
 		up = get_cell(x, y - 1)
+		if up != null: up.set_down(cell)
 	if x > 0:
 		left = get_cell(x - 1, y)
+		if left != null: left.set_right(cell)
 	if y < (_height - 1):
 		down = get_cell(x, y + 1)
+		if down != null: down.set_up(cell)
 	if x < (_width - 1):
 		right = get_cell(x + 1, y)
+		if right != null: right.set_left(cell)
 	
 	cell.set_neighbours(left, right, up, down)
 
@@ -58,9 +69,9 @@ func move_player(dir: Vector2):
 	var swapping_tile_position = player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
-	
 
-func _swap_tiles(a: Vector2, b: Vector2):
+
+func _swap_tiles(a, b):
 	if a == null or b == null:
 		return
 	if a.y >= len(_rows):
