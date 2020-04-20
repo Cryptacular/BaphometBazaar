@@ -69,6 +69,35 @@ func move_player(dir: Vector2):
 	var swapping_tile_position = player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
+	clear_matches()
+
+
+func clear_matches():
+	_detect_matches()
+	
+	for x in _width:
+		for y in _height:
+			var cell = get_cell(x, y)
+			cell.clear()
+
+
+func _detect_matches():
+	var cells_to_clear = []
+	
+	for x in _width:
+		for y in _height:
+			var cell: Cell = get_cell(x, y)
+			if cell.does_match_neighbours_x():
+				cells_to_clear.append(cell)
+				cells_to_clear.append(get_cell(x - 1, y))
+				cells_to_clear.append(get_cell(x + 1, y))
+			if cell.does_match_neighbours_y():
+				cells_to_clear.append(cell)
+				cells_to_clear.append(get_cell(x, y - 1))
+				cells_to_clear.append(get_cell(x, y + 1))
+	
+	for cell in cells_to_clear:
+		cell.mark_to_clear()
 
 
 func _swap_tiles(a, b):

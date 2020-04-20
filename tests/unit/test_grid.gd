@@ -3,6 +3,7 @@ extends "res://addons/gut/test.gd"
 var baseTile = load("res://src/board/tiles/BaseTile.tscn")
 var playerTile = load("res://src/board/tiles/Player.tscn")
 
+
 func test_grid_creates_correct_number_of_rows_and_columns():
 	var width = 3
 	var height  = 8
@@ -49,7 +50,6 @@ func test_set_cell_updates_correct_cell():
 	grid.set_cell(2, 3, cell)
 	
 	assert_eq(grid.get_cell(2, 3), cell)
-
 
 
 func test_set_cell_updates_neighbours():
@@ -126,4 +126,39 @@ func test_move_player_at_edge_swaps_with_tile_on_the_other_side():
 	assert_eq(grid.get_cell(0, 4)._tile, player)
 
 
+func test_clear_matches_does_not_remove_non_matching_tiles():
+	var grid: Grid = Grid.new(3, 1)
+	var cell_0: Cell = grid.get_cell(0, 0)
+	var cell_1: Cell = grid.get_cell(1, 0)
+	var cell_2: Cell = grid.get_cell(2, 0)
+	var tile_0 = baseTile.instance()
+	tile_0.Type = "A"
+	var tile_1 = baseTile.instance()
+	tile_0.Type = "B"
+	var tile_2 = baseTile.instance()
+	tile_0.Type = "C"
+	cell_0.set_tile(tile_0)
+	cell_1.set_tile(tile_1)
+	cell_2.set_tile(tile_2)
+	
+	grid.clear_matches()
+	
+	assert_false(cell_0.is_marked_to_clear())
+	assert_false(cell_1.is_marked_to_clear())
+	assert_false(cell_2.is_marked_to_clear())
 
+
+func test_clear_matches_removes_matching_tiles():
+	var grid: Grid = Grid.new(3, 1)
+	var cell_0: Cell = grid.get_cell(0, 0)
+	var cell_1: Cell = grid.get_cell(1, 0)
+	var cell_2: Cell = grid.get_cell(2, 0)
+	cell_0.set_tile(baseTile.instance())
+	cell_1.set_tile(baseTile.instance())
+	cell_2.set_tile(baseTile.instance())
+	
+	grid.clear_matches()
+	
+	assert_true(cell_0.is_marked_to_clear())
+	assert_true(cell_1.is_marked_to_clear())
+	assert_true(cell_2.is_marked_to_clear())

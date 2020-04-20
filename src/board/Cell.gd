@@ -12,6 +12,7 @@ var _down: Cell
 var _left: Cell
 var _right: Cell
 var _is_player = false
+var _marked_to_clear = false
 
 
 func get_tile():
@@ -20,6 +21,55 @@ func get_tile():
 
 func get_type():
 	return _tile.Type
+
+
+func is_marked_to_clear():
+	return _marked_to_clear
+
+
+func mark_to_clear():
+	_marked_to_clear = true
+
+
+func clear():
+	if not is_marked_to_clear():
+		return
+	
+	var tile: BaseTile = get_tile()
+	
+	if tile == null:
+		return
+	
+	tile.clear()
+	set_tile(null)
+
+
+func does_match_neighbours_x():
+	if _left == null or _right == null:
+		return false
+	
+	var this_tile: BaseTile = get_tile()
+	var left_tile: BaseTile = _left.get_tile()
+	var right_tile: BaseTile = _right.get_tile()
+	
+	if this_tile == null or left_tile == null or right_tile == null:
+		return false
+	
+	return this_tile.Type == left_tile.Type and this_tile.Type == right_tile.Type
+
+
+func does_match_neighbours_y():
+	if _up == null or _down == null:
+		return false
+	
+	var this_tile: BaseTile = get_tile()
+	var up_tile: BaseTile = _up.get_tile()
+	var down_tile: BaseTile = _down.get_tile()
+	
+	if this_tile == null or up_tile == null or down_tile == null:
+		return false
+	
+	return this_tile.Type == up_tile.Type and this_tile.Type == down_tile.Type
 
 
 func set_position(x, y):
