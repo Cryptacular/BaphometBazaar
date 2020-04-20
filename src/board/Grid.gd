@@ -56,16 +56,7 @@ func set_cell(x: int, y: int, cell: Cell):
 
 
 func move_player(dir: Vector2):
-	var player_position
-	
-	for y in len(_rows):
-		var row = _rows[y]
-		for x in len(row):
-			var cell = row[x]
-			if cell.is_player():
-				player_position = Vector2(x, y)
-				continue
-	
+	var player_position = _find_player_position()
 	var swapping_tile_position = player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
@@ -79,6 +70,15 @@ func clear_matches():
 		for y in _height:
 			var cell = get_cell(x, y)
 			cell.clear()
+
+
+func _find_player_position():
+	for y in len(_rows):
+		var row = _rows[y]
+		for x in len(row):
+			var cell = row[x]
+			if cell.is_player():
+				return Vector2(x, y)
 
 
 func _detect_matches():
