@@ -5,11 +5,19 @@ class_name Grid
 var _width: int
 var _height: int
 var _rows = []
+var _player_initial_position: Vector2
+var _available_tiles: Array
+var _player_tile = preload("res://src/board/tiles/Player.tscn")
+var _board: Node2D
 
-
-func _init(width: int, height: int):
+func _init(width: int, height: int, player_initial_position: Vector2, available_tiles: Array, board: Node2D):
+	randomize()
+	
 	_width = width
 	_height = height
+	_player_initial_position = player_initial_position
+	_available_tiles = available_tiles
+	_board = board
 	
 	for y in height:
 		var cells = []
@@ -19,10 +27,23 @@ func _init(width: int, height: int):
 		
 		_rows.append(cells)
 	
-	for y in height:
-		for x in width:
+	for y in _height:
+		for x in _width:
+			var pos = Vector2(x, y)
 			var cell = Cell.new()
+			
+			var tile_scene
+			
+			if pos == _player_initial_position:
+				tile_scene = _player_tile
+			else:
+				tile_scene = _get_random_tile()
+			
+			var tile = tile_scene.instance()
+			
+			_board.add_child(tile)
 			set_cell(x, y, cell)
+			cell.set_tile(tile)
 
 
 func get_cell(x: int, y: int):
@@ -74,6 +95,12 @@ func clear_matches():
 		for y in _height:
 			var cell = get_cell(x, y)
 			cell.clear()
+
+
+func _get_random_tile():
+	var number_of_tiles_available = _available_tiles.size()
+	var rand = floor(rand_range(0, number_of_tiles_available))
+	return _available_tiles[rand]
 
 
 func _find_player_position():

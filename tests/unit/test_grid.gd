@@ -8,14 +8,14 @@ func test_grid_creates_correct_number_of_rows_and_columns():
 	var width = 3
 	var height  = 8
 
-	var grid = Grid.new(width, height)
+	var grid = Grid.new(width, height, Vector2(-1, -1), [baseTile], Node2D.new())
 
 	assert_eq(len(grid._rows), 8)
 	assert_eq(len(grid._rows[0]), 3)
 
 
 func test_grid_cells_point_to_neighbours():
-	var grid = Grid.new(2, 2)
+	var grid = Grid.new(2, 2, Vector2(-1, -1), [baseTile], Node2D.new())
 
 	var cell_0_0 = grid.get_cell(0, 0)
 	var cell_0_1 = grid.get_cell(0, 1)
@@ -36,7 +36,7 @@ func test_grid_cells_point_to_neighbours():
 
 
 func test_get_cell_returns_correct_cell():
-	var grid = Grid.new(10, 8)
+	var grid = Grid.new(10, 8, Vector2(-1, -1), [baseTile], Node2D.new())
 	
 	var cell = grid.get_cell(3, 4)
 	
@@ -44,7 +44,7 @@ func test_get_cell_returns_correct_cell():
 
 
 func test_set_cell_updates_correct_cell():
-	var grid = Grid.new(3, 4)
+	var grid = Grid.new(3, 4, Vector2(-1, -1), [baseTile], Node2D.new())
 	var cell = Cell.new()
 	
 	grid.set_cell(2, 3, cell)
@@ -53,7 +53,7 @@ func test_set_cell_updates_correct_cell():
 
 
 func test_set_cell_updates_neighbours():
-	var grid = Grid.new(5, 5)
+	var grid = Grid.new(5, 5, Vector2(-1, -1), [baseTile], Node2D.new())
 	var cell = Cell.new()
 	
 	grid.set_cell(2, 3, cell)
@@ -65,7 +65,7 @@ func test_set_cell_updates_neighbours():
 
 
 func test_swap_tiles_swaps_position_of_two_tiles():
-	var grid = Grid.new(9, 9)
+	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
 	var tile_1 = baseTile.instance()
 	var tile_2 = baseTile.instance()
 	grid.get_cell(0, 0).set_tile(tile_1)
@@ -77,7 +77,7 @@ func test_swap_tiles_swaps_position_of_two_tiles():
 
 
 func test_move_player_right_swaps_with_tile_on_the_right():
-	var grid = Grid.new(9, 9)
+	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -87,7 +87,7 @@ func test_move_player_right_swaps_with_tile_on_the_right():
 
 
 func test_move_player_left_swaps_with_tile_on_the_left():
-	var grid = Grid.new(9, 9)
+	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -97,7 +97,7 @@ func test_move_player_left_swaps_with_tile_on_the_left():
 
 
 func test_move_player_up_swaps_with_tile_above():
-	var grid = Grid.new(9, 9)
+	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -107,7 +107,7 @@ func test_move_player_up_swaps_with_tile_above():
 
 
 func test_move_player_down_swaps_with_tile_below():
-	var grid = Grid.new(9, 9)
+	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -117,7 +117,7 @@ func test_move_player_down_swaps_with_tile_below():
 
 
 func test_move_player_at_edge_swaps_with_tile_on_the_other_side():
-	var grid = Grid.new(9, 9)
+	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
 	var player = playerTile.instance()
 	grid.get_cell(8, 4).set_tile(player)
 	
@@ -127,7 +127,7 @@ func test_move_player_at_edge_swaps_with_tile_on_the_other_side():
 
 
 func test_clear_matches_does_not_remove_non_matching_tiles():
-	var grid: Grid = Grid.new(3, 1)
+	var grid: Grid = Grid.new(3, 1, Vector2(-1, -1), [baseTile], Node2D.new())
 	var cell_0: Cell = grid.get_cell(0, 0)
 	var cell_1: Cell = grid.get_cell(1, 0)
 	var cell_2: Cell = grid.get_cell(2, 0)
@@ -149,16 +149,13 @@ func test_clear_matches_does_not_remove_non_matching_tiles():
 
 
 func test_clear_matches_removes_matching_tiles():
-	var grid: Grid = Grid.new(3, 1)
+	var grid: Grid = Grid.new(3, 1, Vector2(-1, -1), [baseTile], Node2D.new())
 	var cell_0: Cell = grid.get_cell(0, 0)
 	var cell_1: Cell = grid.get_cell(1, 0)
 	var cell_2: Cell = grid.get_cell(2, 0)
-	cell_0.set_tile(baseTile.instance())
-	cell_1.set_tile(baseTile.instance())
-	cell_2.set_tile(baseTile.instance())
 	
 	grid.clear_matches()
 	
-	assert_true(cell_0.is_marked_to_clear())
-	assert_true(cell_1.is_marked_to_clear())
-	assert_true(cell_2.is_marked_to_clear())
+	assert_null(cell_0.get_tile())
+	assert_null(cell_1.get_tile())
+	assert_null(cell_2.get_tile())
