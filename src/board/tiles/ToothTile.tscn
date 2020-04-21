@@ -4,6 +4,7 @@
 [ext_resource path="res://assets/tiles/tooth.png" type="Texture" id=2]
 
 [node name="ToothTile" instance=ExtResource( 1 )]
+Type = "Tooth"
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
