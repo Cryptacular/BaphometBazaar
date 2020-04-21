@@ -57,6 +57,10 @@ func set_cell(x: int, y: int, cell: Cell):
 
 func move_player(dir: Vector2):
 	var player_position = _find_player_position()
+	
+	if player_position == null:
+		return
+	
 	var swapping_tile_position = player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)

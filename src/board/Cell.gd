@@ -42,6 +42,7 @@ func clear():
 	
 	tile.clear()
 	set_tile(null)
+	_marked_to_clear = false
 
 
 func does_match_neighbours_x():

@@ -14,3 +14,8 @@ visible = false
 position = Vector2( 16, 16 )
 
 [node name="MoveTween" type="Tween" parent="."]
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="DeathTween" type="Tween" parent="."]
