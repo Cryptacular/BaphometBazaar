@@ -5,7 +5,8 @@ var _height: int
 var _player_initial_position: Vector2
 var _available_tiles: Array
 
-var grid: Grid
+var grid
+var grid_scene = load("res://src/board/Grid.tscn")
 
 enum states { INIT, IDLE, BUSY }
 
@@ -48,4 +49,9 @@ func process_busy(_delta: float):
 
 
 func initalise_board():
-	grid = Grid.new(_width, _height, _player_initial_position, _available_tiles, self)
+	grid = grid_scene.instance()
+	grid.width = _width
+	grid.height = _height
+	grid.player_initial_position = _player_initial_position
+	grid.available_tiles = _available_tiles
+	add_child(grid)
