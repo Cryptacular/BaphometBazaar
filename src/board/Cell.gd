@@ -15,12 +15,20 @@ var _is_player = false
 var _marked_to_clear = false
 
 
+func has_tile():
+	return get_tile() != null
+
+
 func get_tile():
 	return _tile
 
 
 func get_type():
 	return _tile.Type
+
+
+func get_position():
+	return Vector2(_position_x, _position_y)
 
 
 func is_marked_to_clear():
@@ -32,31 +40,38 @@ func mark_to_clear():
 
 
 func clear():
-	if not is_marked_to_clear():
+	if !has_tile():
 		return
-	
+		
 	var tile: BaseTile = get_tile()
-	
-	if tile == null:
-		return
 	
 	tile.clear()
 	set_tile(null)
 	_marked_to_clear = false
 
 
+func get_next_cell_with_tile():
+	if has_tile():
+		return self
+	
+	if _up == null:
+		return null
+	
+	return _up.get_next_cell_with_tile()
+
+
 func does_match_neighbours_x():
 	if _left == null or _right == null:
 		return false
 	
-	var this_tile: BaseTile = get_tile()
-	var left_tile: BaseTile = _left.get_tile()
-	var right_tile: BaseTile = _right.get_tile()
-	
-	if this_tile == null or left_tile == null or right_tile == null:
+	if !has_tile() or !_left.has_tile() or !_right.has_tile():
 		return false
 	
-	return this_tile.Type == left_tile.Type and this_tile.Type == right_tile.Type
+	return _matches(_left) and _matches(_right)
+
+
+func _matches(cell: Cell):
+	return get_tile().Type == cell.get_tile().Type
 
 
 func does_match_neighbours_y():

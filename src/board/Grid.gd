@@ -2,6 +2,8 @@ extends Node
 
 class_name Grid
 
+const TILE_SIZE = 32
+
 var _width: int
 var _height: int
 var _rows = []
@@ -39,11 +41,19 @@ func _init(width: int, height: int, player_initial_position: Vector2, available_
 			else:
 				tile_scene = _get_random_tile()
 			
-			var tile = tile_scene.instance()
-			
-			_board.add_child(tile)
 			set_cell(x, y, cell)
-			cell.set_tile(tile)
+			spawn_tile(x, y, tile_scene)
+	
+	clear_matches()
+
+
+func spawn_tile(x: int, y: int, tile_scene: PackedScene):
+	var tile = tile_scene.instance()
+	tile.position = Vector2(x * TILE_SIZE, y * TILE_SIZE)
+	_board.add_child(tile)
+	
+	var cell = get_cell(x, y)
+	cell.set_tile(tile)
 
 
 func get_cell(x: int, y: int):
@@ -89,12 +99,45 @@ func move_player(dir: Vector2):
 
 
 func clear_matches():
-	_detect_matches()
+	var has_matches = _detect_matches()
+	
+	if !has_matches:
+		return
 	
 	for x in _width:
 		for y in _height:
-			var cell = get_cell(x, y)
-			cell.clear()
+			var cell: Cell = get_cell(x, y)
+			if cell.is_marked_to_clear():
+				cell.clear()
+		
+		_refill_column(x)
+	
+	clear_matches()
+
+
+func _refill_column(x: int):
+	if x >= _width:
+		return
+	
+	var number_of_tiles_to_spawn = 0
+	
+	for y in _height:
+		var cell: Cell = get_cell(x, _height - y - 1)
+		if cell.has_tile():
+			continue
+		
+		var next_cell = cell.get_next_cell_with_tile()
+		
+		if next_cell == null:
+			number_of_tiles_to_spawn = number_of_tiles_to_spawn + 1
+			continue
+		
+		_swap_tiles(cell.get_position(), next_cell.get_position())
+	
+	for y in number_of_tiles_to_spawn:
+		var cell: Cell = get_cell(x, y)
+		var tile_scene = _get_random_tile()
+		spawn_tile(x, y, tile_scene)
 
 
 func _get_random_tile():
@@ -129,6 +172,8 @@ func _detect_matches():
 	
 	for cell in cells_to_clear:
 		cell.mark_to_clear()
+	
+	return cells_to_clear.size() > 0
 
 
 func _swap_tiles(a, b):
