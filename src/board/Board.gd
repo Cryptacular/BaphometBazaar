@@ -8,10 +8,6 @@ var _available_tiles: Array
 var grid
 var grid_scene = load("res://src/board/Grid.tscn")
 
-enum states { INIT, IDLE, BUSY }
-
-var state = states.INIT
-
 
 func init(width: int, height: int, player_initial_position: Vector2, available_tiles: Array):
 	_width = width
@@ -22,19 +18,9 @@ func init(width: int, height: int, player_initial_position: Vector2, available_t
 
 func _ready():
 	initalise_board()
-	state = states.IDLE
 
 
-func _process(delta: float):
-	if state == states.INIT:
-		pass
-	elif state == states.IDLE:
-		process_idle(delta)
-	elif state == states.BUSY:
-		process_busy(delta)
-
-
-func process_idle(_delta: float):
+func _process(_delta: float):
 	if Input.is_action_just_pressed("ui_left"):
 		grid.move_player(Vector2(-1, 0))
 	elif Input.is_action_just_pressed("ui_right"):
@@ -43,9 +29,6 @@ func process_idle(_delta: float):
 		grid.move_player(Vector2(0, -1))
 	elif Input.is_action_just_pressed("ui_down"):
 		grid.move_player(Vector2(0, 1))
-
-func process_busy(_delta: float):
-	pass
 
 
 func initalise_board():

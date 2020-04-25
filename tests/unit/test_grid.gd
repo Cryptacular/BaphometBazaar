@@ -2,20 +2,31 @@ extends "res://addons/gut/test.gd"
 
 var baseTile = load("res://src/board/tiles/BaseTile.tscn")
 var playerTile = load("res://src/board/tiles/Player.tscn")
+var grid_scene = load("res://src/board/Grid.tscn")
+
+
+func create_grid(width: int, height: int, player_initial_position: Vector2, available_tiles: Array):
+	var grid: Grid = grid_scene.instance()
+	grid.width = width
+	grid.height = height
+	grid.player_initial_position = player_initial_position
+	grid.available_tiles = available_tiles
+	add_child(grid)
+	return grid
 
 
 func test_grid_creates_correct_number_of_rows_and_columns():
 	var width = 3
 	var height  = 8
 
-	var grid = Grid.new(width, height, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(width, height, Vector2(-1, -1), [baseTile])
 
 	assert_eq(len(grid._rows), 8)
 	assert_eq(len(grid._rows[0]), 3)
 
 
 func test_grid_cells_point_to_neighbours():
-	var grid = Grid.new(2, 2, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(2, 2, Vector2(-1, -1), [baseTile])
 
 	var cell_0_0 = grid.get_cell(0, 0)
 	var cell_0_1 = grid.get_cell(0, 1)
@@ -36,7 +47,7 @@ func test_grid_cells_point_to_neighbours():
 
 
 func test_get_cell_returns_correct_cell():
-	var grid = Grid.new(10, 8, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(10, 8, Vector2(-1, -1), [baseTile])
 	
 	var cell = grid.get_cell(3, 4)
 	
@@ -44,7 +55,7 @@ func test_get_cell_returns_correct_cell():
 
 
 func test_set_cell_updates_correct_cell():
-	var grid = Grid.new(3, 4, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(3, 4, Vector2(-1, -1), [baseTile])
 	var cell = Cell.new()
 	
 	grid.set_cell(2, 3, cell)
@@ -53,7 +64,7 @@ func test_set_cell_updates_correct_cell():
 
 
 func test_set_cell_updates_neighbours():
-	var grid = Grid.new(5, 5, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(5, 5, Vector2(-1, -1), [baseTile])
 	var cell = Cell.new()
 	
 	grid.set_cell(2, 3, cell)
@@ -65,7 +76,7 @@ func test_set_cell_updates_neighbours():
 
 
 func test_swap_tiles_swaps_position_of_two_tiles():
-	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(9, 9, Vector2(-1, -1), [baseTile])
 	var tile_1 = baseTile.instance()
 	var tile_2 = baseTile.instance()
 	grid.get_cell(0, 0).set_tile(tile_1)
@@ -77,7 +88,7 @@ func test_swap_tiles_swaps_position_of_two_tiles():
 
 
 func test_move_player_right_swaps_with_tile_on_the_right():
-	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(9, 9, Vector2(-1, -1), [baseTile])
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -87,7 +98,7 @@ func test_move_player_right_swaps_with_tile_on_the_right():
 
 
 func test_move_player_left_swaps_with_tile_on_the_left():
-	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(9, 9, Vector2(-1, -1), [baseTile])
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -97,7 +108,7 @@ func test_move_player_left_swaps_with_tile_on_the_left():
 
 
 func test_move_player_up_swaps_with_tile_above():
-	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(9, 9, Vector2(-1, -1), [baseTile])
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -107,7 +118,7 @@ func test_move_player_up_swaps_with_tile_above():
 
 
 func test_move_player_down_swaps_with_tile_below():
-	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(9, 9, Vector2(-1, -1), [baseTile])
 	var player = playerTile.instance()
 	grid.get_cell(4, 4).set_tile(player)
 	
@@ -117,7 +128,7 @@ func test_move_player_down_swaps_with_tile_below():
 
 
 func test_move_player_at_edge_swaps_with_tile_on_the_other_side():
-	var grid = Grid.new(9, 9, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid = create_grid(9, 9, Vector2(-1, -1), [baseTile])
 	var player = playerTile.instance()
 	grid.get_cell(8, 4).set_tile(player)
 	
@@ -127,7 +138,7 @@ func test_move_player_at_edge_swaps_with_tile_on_the_other_side():
 
 
 func test_clear_matches_does_not_remove_non_matching_tiles():
-	var grid: Grid = Grid.new(3, 1, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid: Grid = create_grid(3, 1, Vector2(-1, -1), [baseTile])
 	var cell_0: Cell = grid.get_cell(0, 0)
 	var cell_1: Cell = grid.get_cell(1, 0)
 	var cell_2: Cell = grid.get_cell(2, 0)
@@ -149,7 +160,7 @@ func test_clear_matches_does_not_remove_non_matching_tiles():
 
 
 func test_clear_matches_removes_matching_tiles():
-	var grid: Grid = Grid.new(3, 1, Vector2(-1, -1), [baseTile], Node2D.new())
+	var grid: Grid = create_grid(3, 1, Vector2(-1, -1), [baseTile])
 	var cell_0: Cell = grid.get_cell(0, 0)
 	var cell_1: Cell = grid.get_cell(1, 0)
 	var cell_2: Cell = grid.get_cell(2, 0)

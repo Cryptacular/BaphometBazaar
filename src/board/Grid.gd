@@ -3,20 +3,26 @@ extends Node
 class_name Grid
 
 const TILE_SIZE = 32
+enum states { INIT, IDLE, BUSY }
 
 export (int) var width
 export (int) var height
 export (Vector2) var player_initial_position
 export (Array) var available_tiles
 
+var state = states.INIT
 var _rows = []
 var _player_tile = preload("res://src/board/tiles/Player.tscn")
+var _player_move_queue = PlayerMoveQueue.new(false, Vector2())
+
 
 func _ready():
 	randomize()
 	
+	state = states.IDLE
+	
 	var timer = $TileClearedTimer
-	timer.connect("timeout", self, "refill_columns")
+	timer.connect("timeout", self, "_refill_columns")
 	
 	for y in height:
 		var cells = []
@@ -84,21 +90,27 @@ func set_cell(x: int, y: int, cell: Cell):
 
 
 func move_player(dir: Vector2):
+	if state != states.IDLE:
+		_player_move_queue = PlayerMoveQueue.new(true, dir)
+		return
+	
 	var player_position = _find_player_position()
 	
 	if player_position == null:
 		return
 	
+	state = states.BUSY
+	
 	var swapping_tile_position = player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
-	clear_matches()
 
 
 func clear_matches():
 	var has_matches = _detect_matches()
 	
 	if !has_matches:
+		post_player_move()
 		return
 	
 	for x in width:
@@ -113,9 +125,17 @@ func clear_matches():
 	clear_matches()
 
 
-func refill_columns():
+func post_player_move():
+	state = states.IDLE
+	if _player_move_queue.is_queued:
+		move_player(_player_move_queue.direction)
+		_player_move_queue.is_queued = false
+
+
+func _refill_columns():
 	for x in width:
 		_refill_column(x)
+	clear_matches()
 
 
 func _refill_column(x: int):
@@ -198,3 +218,12 @@ func _swap_tiles(a, b):
 	
 	a_cell.set_tile(b_tile)
 	b_cell.set_tile(a_tile)
+
+
+class PlayerMoveQueue:
+	var is_queued: bool
+	var direction: Vector2
+	
+	func _init(_is_queued: bool, _direction: Vector2):
+		is_queued = _is_queued
+		direction = _direction
