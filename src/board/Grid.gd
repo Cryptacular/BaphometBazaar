@@ -36,22 +36,21 @@ func _ready():
 		for x in width:
 			var pos = Vector2(x, y)
 			var cell = Cell.new()
+			set_cell(x, y, cell)
 			
 			var tile_scene
 			
 			if pos == player_initial_position:
-				tile_scene = _player_tile
+				tile_scene = _player_tile.instance()
 			else:
 				tile_scene = _get_random_tile()
+				while cell.would_match_neighbours(tile_scene.Type):
+					tile_scene = _get_random_tile()
 			
-			set_cell(x, y, cell)
 			spawn_tile(x, y, tile_scene)
-	
-	clear_matches()
 
 
-func spawn_tile(x: int, y: int, tile_scene: PackedScene):
-	var tile = tile_scene.instance()
+func spawn_tile(x: int, y: int, tile: BaseTile):
 	tile.position = Vector2(x * TILE_SIZE, -1 * TILE_SIZE)
 	add_child(tile)
 	
@@ -104,7 +103,7 @@ func move_player(dir: Vector2):
 	var swapping_tile_position = player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
-
+	clear_matches()
 
 func clear_matches():
 	var has_matches = _detect_matches()
@@ -121,8 +120,6 @@ func clear_matches():
 	
 	var timer = $TileClearedTimer
 	timer.start()
-	
-	clear_matches()
 
 
 func post_player_move():
@@ -165,7 +162,7 @@ func _refill_column(x: int):
 func _get_random_tile():
 	var number_of_tiles_available = available_tiles.size()
 	var rand = floor(rand_range(0, number_of_tiles_available))
-	return available_tiles[rand]
+	return (available_tiles[rand]).instance()
 
 
 func _find_player_position():

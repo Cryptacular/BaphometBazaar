@@ -88,6 +88,24 @@ func does_match_neighbours_y():
 	return this_tile.Type == up_tile.Type and this_tile.Type == down_tile.Type
 
 
+func would_match_neighbours(type: String):
+	var would_match = false
+	
+	if _left == null or _left._left == null:
+		return false
+	
+	if _up == null or _up._up == null:
+		return false
+	
+	if type == _left.get_type() and type == _left._left.get_type():
+		would_match = true
+	
+	if type == _up.get_type() and type == _up._up.get_type():
+		would_match = true
+	
+	return would_match
+
+
 func set_position(x, y):
 	_position_x = x
 	_position_y = y
