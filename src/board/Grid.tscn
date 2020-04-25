@@ -6,4 +6,4 @@
 script = ExtResource( 1 )
 
 [node name="TileClearedTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.3

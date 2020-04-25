@@ -50,6 +50,12 @@ func _ready():
 			spawn_tile(x, y, tile_scene)
 
 
+func _process(delta: float):
+	if _player_move_queue.is_queued and state == states.IDLE:
+		move_player(_player_move_queue.direction)
+		_player_move_queue.is_queued = false
+
+
 func spawn_tile(x: int, y: int, tile: BaseTile):
 	tile.position = Vector2(x * TILE_SIZE, -1 * TILE_SIZE)
 	add_child(tile)
@@ -124,9 +130,6 @@ func clear_matches():
 
 func post_player_move():
 	state = states.IDLE
-	if _player_move_queue.is_queued:
-		move_player(_player_move_queue.direction)
-		_player_move_queue.is_queued = false
 
 
 func _refill_columns():
