@@ -1,5 +1,7 @@
 extends Node
 
+signal tiles_matched(type, amount)
+
 const TILE_SIZE = 32
 enum states { INIT, IDLE, BUSY }
 
@@ -177,24 +179,33 @@ func _find_player_position() -> Vector2:
 
 
 func _detect_matches() -> bool:
-	var cells_to_clear := []
+	var has_cleared_cells := false
 	
 	for x in width:
 		for y in height:
 			var cell := get_cell(x, y)
-			if cell.does_match_neighbours_x():
-				cells_to_clear.append(cell)
-				cells_to_clear.append(get_cell(x - 1, y))
-				cells_to_clear.append(get_cell(x + 1, y))
-			if cell.does_match_neighbours_y():
-				cells_to_clear.append(cell)
-				cells_to_clear.append(get_cell(x, y - 1))
-				cells_to_clear.append(get_cell(x, y + 1))
+			
+			if cell.is_marked_to_clear():
+				continue
+				
+			var matches_x = cell.get_matching_cells_x()
+			var matches_y = cell.get_matching_cells_y()
+			
+			if matches_x.size() >= 3:
+				for matched_cell in matches_x:
+					matched_cell.mark_to_clear()
+			
+				has_cleared_cells = true
+				emit_signal("tiles_matched", matches_x[0].get_type(), matches_x.size())
+			
+			if matches_y.size() >= 3:
+				for matched_cell in matches_y:
+					matched_cell.mark_to_clear()
+			
+				has_cleared_cells = true
+				emit_signal("tiles_matched", matches_y[0].get_type(), matches_y.size())
 	
-	for cell in cells_to_clear:
-		cell.mark_to_clear()
-	
-	return cells_to_clear.size() > 0
+	return has_cleared_cells
 
 
 func _swap_tiles(a: Vector2, b: Vector2) -> void:

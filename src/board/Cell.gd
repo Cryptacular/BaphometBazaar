@@ -60,32 +60,44 @@ func get_next_cell_with_tile() -> Cell:
 	return _up.get_next_cell_with_tile()
 
 
-func does_match_neighbours_x() -> bool:
-	if _left == null or _right == null:
-		return false
+func get_matching_cells_x() -> Array:
+	var matches := [self]
 	
-	if !has_tile() or !_left.has_tile() or !_right.has_tile():
-		return false
+	var type := get_type()
+	var left: Cell = _left
+	var right: Cell = _right
 	
-	return _matches(_left) and _matches(_right)
+	while (left != null and left.get_type() == type):
+		matches.append(left)
+		left = left._left
+	
+	while (right != null and right.get_type() == type):
+		matches.append(right)
+		right = right._right
+	
+	return matches
+
+
+func get_matching_cells_y() -> Array:
+	var matches := [self]
+	
+	var type := get_type()
+	var up: Cell = _up
+	var down: Cell = _down
+	
+	while (up != null and up.get_type() == type):
+		matches.append(up)
+		up = up._up
+	
+	while (down != null and down.get_type() == type):
+		matches.append(down)
+		down = down._down
+	
+	return matches
 
 
 func _matches(cell: Cell) -> bool:
 	return get_tile().Type == cell.get_tile().Type
-
-
-func does_match_neighbours_y() -> bool:
-	if _up == null or _down == null:
-		return false
-	
-	var this_tile := get_tile()
-	var up_tile := _up.get_tile()
-	var down_tile := _down.get_tile()
-	
-	if this_tile == null or up_tile == null or down_tile == null:
-		return false
-	
-	return this_tile.Type == up_tile.Type and this_tile.Type == down_tile.Type
 
 
 func would_match_neighbours(type: String) -> bool:
