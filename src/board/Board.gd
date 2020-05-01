@@ -6,21 +6,21 @@ var _player_initial_position: Vector2
 var _available_tiles: Array
 
 var grid
-var grid_scene = load("res://src/board/Grid.tscn")
+var grid_scene := load("res://src/board/Grid.tscn")
 
 
-func init(width: int, height: int, player_initial_position: Vector2, available_tiles: Array):
+func init(width: int, height: int, player_initial_position: Vector2, available_tiles: Array) -> void:
 	_width = width
 	_height = height
 	_player_initial_position = player_initial_position
 	_available_tiles = available_tiles
 
 
-func _ready():
+func _ready() -> void:
 	initalise_board()
 
 
-func _process(_delta: float):
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_left"):
 		grid.move_player(Vector2(-1, 0))
 	elif Input.is_action_just_pressed("ui_right"):
@@ -31,7 +31,7 @@ func _process(_delta: float):
 		grid.move_player(Vector2(0, 1))
 
 
-func initalise_board():
+func initalise_board() -> void:
 	grid = grid_scene.instance()
 	grid.width = _width
 	grid.height = _height

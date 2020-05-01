@@ -7,7 +7,7 @@ export (Array, PackedScene) var available_tiles
 
 var Board = preload("res://src/board/Board.tscn")
 
-func _ready():
+func _ready() -> void:
 	var board = Board.instance()
 	board.init(width, height, player_initial_position, available_tiles)
 	board.position = Vector2(164, 32)

@@ -1,7 +1,5 @@
 extends Node
 
-class_name Grid
-
 const TILE_SIZE = 32
 enum states { INIT, IDLE, BUSY }
 
@@ -11,21 +9,21 @@ export (Vector2) var player_initial_position
 export (Array) var available_tiles
 
 var state = states.INIT
-var _rows = []
-var _player_tile = preload("res://src/board/tiles/Player.tscn")
-var _player_move_queue = PlayerMoveQueue.new(false, Vector2())
+var _rows := []
+var _player_tile := preload("res://src/board/tiles/Player.tscn")
+var _player_move_queue := PlayerMoveQueue.new(false, Vector2())
 
 
-func _ready():
+func _ready() -> void:
 	randomize()
 	
 	state = states.IDLE
 	
-	var timer = $TileClearedTimer
-	timer.connect("timeout", self, "_refill_columns")
+	var timer := $TileClearedTimer
+	var _err = timer.connect("timeout", self, "_refill_columns")
 	
 	for y in height:
-		var cells = []
+		var cells := []
 		
 		for x in width:
 			cells.append(null)
@@ -34,11 +32,11 @@ func _ready():
 	
 	for y in height:
 		for x in width:
-			var pos = Vector2(x, y)
-			var cell = Cell.new()
+			var pos := Vector2(x, y)
+			var cell := Cell.new()
 			set_cell(x, y, cell)
 			
-			var tile_scene
+			var tile_scene: BaseTile
 			
 			if pos == player_initial_position:
 				tile_scene = _player_tile.instance()
@@ -50,25 +48,25 @@ func _ready():
 			spawn_tile(x, y, tile_scene)
 
 
-func _process(delta: float):
+func _process(_delta: float) -> void:
 	if _player_move_queue.is_queued and state == states.IDLE:
 		move_player(_player_move_queue.direction)
 		_player_move_queue.is_queued = false
 
 
-func spawn_tile(x: int, y: int, tile: BaseTile):
+func spawn_tile(x: int, y: int, tile: BaseTile) -> void:
 	tile.position = Vector2(x * TILE_SIZE, -1 * TILE_SIZE)
 	add_child(tile)
 	
-	var cell = get_cell(x, y)
+	var cell := get_cell(x, y)
 	cell.set_tile(tile)
 
 
-func get_cell(x: int, y: int):
+func get_cell(x: int, y: int) -> Cell:
 	return _rows[y][x]
 
 
-func set_cell(x: int, y: int, cell: Cell):
+func set_cell(x: int, y: int, cell: Cell) -> void:
 	cell.set_position(x, y)
 	
 	var left: Cell
@@ -94,25 +92,25 @@ func set_cell(x: int, y: int, cell: Cell):
 	_rows[y][x] = cell
 
 
-func move_player(dir: Vector2):
+func move_player(dir: Vector2) -> void:
 	if state != states.IDLE:
 		_player_move_queue = PlayerMoveQueue.new(true, dir)
 		return
 	
-	var player_position = _find_player_position()
+	var player_position := _find_player_position()
 	
-	if player_position == null:
+	if player_position == Vector2(-1, -1):
 		return
 	
 	state = states.BUSY
 	
-	var swapping_tile_position = player_position + dir
+	var swapping_tile_position := player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
 	clear_matches()
 
-func clear_matches():
-	var has_matches = _detect_matches()
+func clear_matches() -> void:
+	var has_matches := _detect_matches()
 	
 	if !has_matches:
 		post_player_move()
@@ -120,36 +118,36 @@ func clear_matches():
 	
 	for x in width:
 		for y in height:
-			var cell: Cell = get_cell(x, y)
+			var cell := get_cell(x, y)
 			if cell.is_marked_to_clear():
 				cell.clear()
 	
-	var timer = $TileClearedTimer
-	timer.start()
+	var tiles_cleared_timer := $TileClearedTimer
+	tiles_cleared_timer.start()
 
 
-func post_player_move():
+func post_player_move() -> void:
 	state = states.IDLE
 
 
-func _refill_columns():
+func _refill_columns() -> void:
 	for x in width:
 		_refill_column(x)
 	clear_matches()
 
 
-func _refill_column(x: int):
+func _refill_column(x: int) -> void:
 	if x >= width:
 		return
 	
-	var number_of_tiles_to_spawn = 0
+	var number_of_tiles_to_spawn := 0
 	
 	for y in height:
-		var cell: Cell = get_cell(x, height - y - 1)
+		var cell := get_cell(x, height - y - 1)
 		if cell.has_tile():
 			continue
 		
-		var next_cell = cell.get_next_cell_with_tile()
+		var next_cell := cell.get_next_cell_with_tile()
 		
 		if next_cell == null:
 			number_of_tiles_to_spawn = number_of_tiles_to_spawn + 1
@@ -158,31 +156,32 @@ func _refill_column(x: int):
 		_swap_tiles(cell.get_position(), next_cell.get_position())
 	
 	for y in number_of_tiles_to_spawn:
-		var tile_scene = _get_random_tile()
+		var tile_scene := _get_random_tile()
 		spawn_tile(x, y, tile_scene)
 
 
-func _get_random_tile():
-	var number_of_tiles_available = available_tiles.size()
-	var rand = floor(rand_range(0, number_of_tiles_available))
+func _get_random_tile() -> BaseTile:
+	var number_of_tiles_available: int = available_tiles.size()
+	var rand := floor(rand_range(0, number_of_tiles_available))
 	return (available_tiles[rand]).instance()
 
 
-func _find_player_position():
+func _find_player_position() -> Vector2:
 	for y in len(_rows):
-		var row = _rows[y]
+		var row: Array = _rows[y]
 		for x in len(row):
-			var cell = row[x]
+			var cell: Cell = row[x]
 			if cell.is_player():
 				return Vector2(x, y)
+	return Vector2(-1, -1)
 
 
-func _detect_matches():
-	var cells_to_clear = []
+func _detect_matches() -> bool:
+	var cells_to_clear := []
 	
 	for x in width:
 		for y in height:
-			var cell: Cell = get_cell(x, y)
+			var cell := get_cell(x, y)
 			if cell.does_match_neighbours_x():
 				cells_to_clear.append(cell)
 				cells_to_clear.append(get_cell(x - 1, y))
@@ -198,7 +197,7 @@ func _detect_matches():
 	return cells_to_clear.size() > 0
 
 
-func _swap_tiles(a, b):
+func _swap_tiles(a: Vector2, b: Vector2) -> void:
 	if a == null or b == null:
 		return
 	if a.y >= len(_rows):
@@ -210,11 +209,11 @@ func _swap_tiles(a, b):
 	if b.x >= len(_rows[b.y]):
 		b.x = 0
 	
-	var a_cell: Cell = get_cell(a.x, a.y)
-	var b_cell: Cell = get_cell(b.x, b.y)
+	var a_cell := get_cell(a.x, a.y)
+	var b_cell := get_cell(b.x, b.y)
 	
-	var a_tile: BaseTile = a_cell.get_tile()
-	var b_tile: BaseTile = b_cell.get_tile()
+	var a_tile := a_cell.get_tile()
+	var b_tile := b_cell.get_tile()
 	
 	a_cell.set_tile(b_tile)
 	b_cell.set_tile(a_tile)

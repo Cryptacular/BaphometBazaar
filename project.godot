@@ -18,16 +18,10 @@ _global_script_classes=[ {
 "class": "Cell",
 "language": "GDScript",
 "path": "res://src/board/Cell.gd"
-}, {
-"base": "Node",
-"class": "Grid",
-"language": "GDScript",
-"path": "res://src/board/Grid.gd"
 } ]
 _global_script_class_icons={
 "BaseTile": "",
-"Cell": "",
-"Grid": ""
+"Cell": ""
 }
 
 [application]
