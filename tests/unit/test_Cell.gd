@@ -1,109 +1,83 @@
 extends "res://addons/gut/test.gd"
 
 var baseTile = load("res://src/board/tiles/BaseTile.tscn")
+var pentagramTile = load("res://src/board/tiles/PentagramTile.tscn")
+var batwingTile = load("res://src/board/tiles/BatwingTile.tscn")
+var vialRoundTile = load("res://src/board/tiles/VialRoundTile.tscn")
+var vialAngularTile = load("res://src/board/tiles/VialAngularTile.tscn")
+var playerTile = load("res://src/board/tiles/Player.tscn")
 
-func test_does_match_neighbours_returns_false_if_neighbours_null():
-	var cell = Cell.new()
+func test_would_match_neighbours_returns_false_if_no_matches_in_row():
+	var tile_0 = pentagramTile.instance()
+	var tile_1 = batwingTile.instance()
 	
-	assert_false(cell.does_match_neighbours_x())
-	assert_false(cell.does_match_neighbours_y())
-
-
-func test_does_match_neighbours_x_returns_false_if_dont_match():
-	var left_cell = Cell.new()
-	var left_tile = baseTile.instance()
-	left_tile.Type = "A"
-	left_cell.set_tile(left_tile)
+	var cell_0 = Cell.new()
+	var cell_1 = Cell.new()
+	var cell_2 = Cell.new()
 	
-	var right_cell = Cell.new()
-	var right_tile = baseTile.instance()
-	right_tile.Type = "A"
-	right_cell.set_tile(right_tile)
+	cell_0.set_tile(tile_0)
+	cell_1.set_tile(tile_1)
 	
-	var middle_cell = Cell.new()
-	var middle_tile = baseTile.instance()
-	middle_tile.Type = "B"
-	middle_cell.set_tile(middle_tile)
+	cell_0.set_right(cell_1)
+	cell_1.set_left(cell_0)
+	cell_1.set_right(cell_2)
+	cell_2.set_left(cell_1)
 	
-	left_cell.set_right(middle_cell)
-	middle_cell.set_left(left_cell)
-	middle_cell.set_right(right_cell)
-	right_cell.set_left(middle_cell)
-	
-	assert_false(middle_cell.does_match_neighbours_x())
+	assert_false(cell_2.would_match_neighbours("Batwing"))
 
 
-func test_does_match_neighbours_x_returns_true_if_neighbours_match():
-	var left_cell = Cell.new()
-	var left_tile = baseTile.instance()
-	left_tile.Type = "A"
-	left_cell.set_tile(left_tile)
+func test_would_match_neighbours_returns_true_if_matches_in_row():
+	var tile_0 = batwingTile.instance()
+	var tile_1 = batwingTile.instance()
 	
-	var right_cell = Cell.new()
-	var right_tile = baseTile.instance()
-	right_tile.Type = "A"
-	right_cell.set_tile(right_tile)
+	var cell_0 = Cell.new()
+	var cell_1 = Cell.new()
+	var cell_2 = Cell.new()
 	
-	var middle_cell = Cell.new()
-	var middle_tile = baseTile.instance()
-	middle_tile.Type = "A"
-	middle_cell.set_tile(middle_tile)
+	cell_0.set_tile(tile_0)
+	cell_1.set_tile(tile_1)
 	
-	left_cell.set_right(middle_cell)
-	middle_cell.set_left(left_cell)
-	middle_cell.set_right(right_cell)
-	right_cell.set_left(middle_cell)
+	cell_0.set_right(cell_1)
+	cell_1.set_left(cell_0)
+	cell_1.set_right(cell_2)
+	cell_2.set_left(cell_1)
 	
-	var actual = middle_cell.does_match_neighbours_x()
-	
-	assert_true(actual)
+	assert_true(cell_2.would_match_neighbours("Batwing"))
 
 
-func test_does_match_neighbours_y_returns_false_if_dont_match():
-	var up_cell = Cell.new()
-	var up_tile = baseTile.instance()
-	up_tile.Type = "A"
-	up_cell.set_tile(up_tile)
+func test_would_match_neighbours_returns_false_if_no_matches_in_column():
+	var tile_0 = pentagramTile.instance()
+	var tile_1 = batwingTile.instance()
 	
-	var down_cell = Cell.new()
-	var down_tile = baseTile.instance()
-	down_tile.Type = "A"
-	down_cell.set_tile(down_tile)
+	var cell_0 = Cell.new()
+	var cell_1 = Cell.new()
+	var cell_2 = Cell.new()
 	
-	var middle_cell = Cell.new()
-	var middle_tile = baseTile.instance()
-	middle_tile.Type = "B"
-	middle_cell.set_tile(middle_tile)
+	cell_0.set_tile(tile_0)
+	cell_1.set_tile(tile_1)
 	
-	up_cell.set_down(middle_cell)
-	middle_cell.set_up(up_cell)
-	middle_cell.set_down(down_cell)
-	down_cell.set_up(middle_cell)
+	cell_0.set_down(cell_1)
+	cell_1.set_up(cell_0)
+	cell_1.set_down(cell_2)
+	cell_2.set_up(cell_1)
 	
-	assert_false(middle_cell.does_match_neighbours_y())
+	assert_false(cell_2.would_match_neighbours("Batwing"))
 
 
-func test_does_match_neighbours_y_returns_true_if_neighbours_match():
-	var up_cell = Cell.new()
-	var up_tile = baseTile.instance()
-	up_tile.Type = "A"
-	up_cell.set_tile(up_tile)
+func test_would_match_neighbours_returns_true_if_matches_in_column():
+	var tile_0 = batwingTile.instance()
+	var tile_1 = batwingTile.instance()
 	
-	var down_cell = Cell.new()
-	var down_tile = baseTile.instance()
-	down_tile.Type = "A"
-	down_cell.set_tile(down_tile)
+	var cell_0 = Cell.new()
+	var cell_1 = Cell.new()
+	var cell_2 = Cell.new()
 	
-	var middle_cell = Cell.new()
-	var middle_tile = baseTile.instance()
-	middle_tile.Type = "A"
-	middle_cell.set_tile(middle_tile)
+	cell_0.set_tile(tile_0)
+	cell_1.set_tile(tile_1)
 	
-	up_cell.set_down(middle_cell)
-	middle_cell.set_up(up_cell)
-	middle_cell.set_down(down_cell)
-	down_cell.set_up(middle_cell)
+	cell_0.set_down(cell_1)
+	cell_1.set_up(cell_0)
+	cell_1.set_down(cell_2)
+	cell_2.set_up(cell_1)
 	
-	var actual = middle_cell.does_match_neighbours_y()
-	
-	assert_true(actual)
+	assert_true(cell_2.would_match_neighbours("Batwing"))

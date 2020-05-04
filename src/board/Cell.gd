@@ -101,21 +101,13 @@ func _matches(cell: Cell) -> bool:
 
 
 func would_match_neighbours(type: String) -> bool:
-	var would_match := false
+	if _left != null and type == _left.get_type() and _left._left != null and type == _left._left.get_type():
+		return true
 	
-	if _left == null or _left._left == null:
-		return false
+	if _up != null and type == _up.get_type() and _up._up != null and type == _up._up.get_type():
+		return true
 	
-	if _up == null or _up._up == null:
-		return false
-	
-	if type == _left.get_type() and type == _left._left.get_type():
-		would_match = true
-	
-	if type == _up.get_type() and type == _up._up.get_type():
-		would_match = true
-	
-	return would_match
+	return false
 
 
 func set_position(x, y) -> void:
@@ -159,7 +151,7 @@ func set_down(cell: Cell) -> void:
 
 
 func is_player() -> bool:
-	return _tile != null and _tile.Type == "Player"
+	return _tile != null and get_type() == "Player"
 
 
 func _grid_to_pixel(pos: int) -> int:
