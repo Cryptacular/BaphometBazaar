@@ -10,5 +10,6 @@ var Board = preload("res://src/board/Board.tscn")
 func _ready() -> void:
 	var board = Board.instance()
 	board.init(width, height, player_initial_position, available_tiles)
-	board.position = Vector2(164, 32)
+	board.position = Vector2(492, 96)
+	board.scale = Vector2(3, 3)
 	add_child(board)
