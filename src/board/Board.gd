@@ -1,5 +1,7 @@
 extends Node2D
 
+signal tiles_matched(type, amount)
+
 var _width: int
 var _height: int
 var _player_initial_position: Vector2
@@ -38,3 +40,8 @@ func initalise_board() -> void:
 	grid.player_initial_position = _player_initial_position
 	grid.available_tiles = _available_tiles
 	add_child(grid)
+	grid.connect("tiles_matched", self, "_on_tiles_matched")
+
+
+func _on_tiles_matched(type: String, amount: int):
+	emit_signal("tiles_matched", type, amount)

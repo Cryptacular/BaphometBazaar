@@ -13,3 +13,8 @@ func _ready() -> void:
 	board.position = Vector2(492, 96)
 	board.scale = Vector2(3, 3)
 	add_child(board)
+	board.connect("tiles_matched", self, "_on_tiles_matched")
+
+
+func _on_tiles_matched(type: String, amount: int):
+	print(str(amount) + "x " + type)
