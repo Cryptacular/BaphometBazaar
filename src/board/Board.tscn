@@ -1,6 +1,54 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://src/board/Board.gd" type="Script" id=1]
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+signal tiles_matched(type, amount)
+
+var _width: int
+var _height: int
+var _player_initial_position: Vector2
+var _available_tiles: Array
+
+var grid
+var grid_scene := load(\"res://src/board/Grid.tscn\")
+
+
+func init(width: int, height: int, player_initial_position: Vector2, available_tiles: Array) -> void:
+	_width = width
+	_height = height
+	_player_initial_position = player_initial_position
+	_available_tiles = available_tiles
+
+
+func _ready() -> void:
+	initalise_board()
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed(\"ui_left\"):
+		grid.move_player(Vector2(-1, 0))
+	elif Input.is_action_just_pressed(\"ui_right\"):
+		grid.move_player(Vector2(1, 0))
+	elif Input.is_action_just_pressed(\"ui_up\"):
+		grid.move_player(Vector2(0, -1))
+	elif Input.is_action_just_pressed(\"ui_down\"):
+		grid.move_player(Vector2(0, 1))
+
+
+func initalise_board() -> void:
+	grid = grid_scene.instance()
+	grid.width = _width
+	grid.height = _height
+	grid.player_initial_position = _player_initial_position
+	grid.available_tiles = _available_tiles
+	add_child(grid)
+	grid.connect(\"tiles_matched\", self, \"_on_tiles_matched\")
+
+
+func _on_tiles_matched(type: String, amount: int):
+	emit_signal(\"tiles_matched\", type, amount)
+"
 
 [node name="Board" type="Node2D"]
-script = ExtResource( 1 )
+script = SubResource( 1 )

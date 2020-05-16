@@ -8,7 +8,7 @@ enum states { INIT, IDLE, BUSY }
 export (int) var width
 export (int) var height
 export (Vector2) var player_initial_position
-export (Array) var available_tiles
+export (Array, PackedScene) var available_tiles
 
 var state = states.INIT
 var _rows := []
@@ -54,6 +54,15 @@ func _process(_delta: float) -> void:
 	if _player_move_queue.is_queued and state == states.IDLE:
 		move_player(_player_move_queue.direction)
 		_player_move_queue.is_queued = false
+	
+	if Input.is_action_just_pressed("ui_left"):
+		move_player(Vector2(-1, 0))
+	elif Input.is_action_just_pressed("ui_right"):
+		move_player(Vector2(1, 0))
+	elif Input.is_action_just_pressed("ui_up"):
+		move_player(Vector2(0, -1))
+	elif Input.is_action_just_pressed("ui_down"):
+		move_player(Vector2(0, 1))
 
 
 func spawn_tile(x: int, y: int, tile: BaseTile) -> void:
