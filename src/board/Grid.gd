@@ -21,8 +21,11 @@ func _ready() -> void:
 	
 	state = states.IDLE
 	
-	var timer := $TileClearedTimer
-	var _err = timer.connect("timeout", self, "_refill_columns")
+	var tiles_matched_timer := $TilesMovedTimer
+	tiles_matched_timer.connect("timeout", self, "clear_matches")
+	
+	var tiles_cleared_timer := $TilesClearedTimer
+	tiles_cleared_timer.connect("timeout", self, "_refill_columns")
 	
 	for y in height:
 		var cells := []
@@ -118,7 +121,7 @@ func move_player(dir: Vector2) -> void:
 	var swapping_tile_position := player_position + dir
 	
 	_swap_tiles(player_position, swapping_tile_position)
-	clear_matches()
+	$TilesMovedTimer.start()
 
 func clear_matches() -> void:
 	var has_matches := _detect_matches()
@@ -133,8 +136,7 @@ func clear_matches() -> void:
 			if cell.is_marked_to_clear():
 				cell.clear()
 	
-	var tiles_cleared_timer := $TileClearedTimer
-	tiles_cleared_timer.start()
+	$TilesClearedTimer.start()
 
 
 func post_player_move() -> void:
@@ -144,7 +146,7 @@ func post_player_move() -> void:
 func _refill_columns() -> void:
 	for x in width:
 		_refill_column(x)
-	clear_matches()
+	$TilesMovedTimer.start()
 
 
 func _refill_column(x: int) -> void:
