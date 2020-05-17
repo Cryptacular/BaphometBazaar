@@ -3,3 +3,6 @@
 [ext_resource path="res://src/levels/BaseLevel.tscn" type="PackedScene" id=5]
 
 [node name="TestLevel" instance=ExtResource( 5 )]
+
+[node name="Inventory" parent="." index="1"]
+position = Vector2( 266, 136.5 )
