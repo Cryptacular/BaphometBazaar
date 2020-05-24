@@ -8,7 +8,7 @@
 [ext_resource path="res://src/inventory/tiles/Pentagram.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/inventory/tiles/VialRound.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/inventory/tiles/Tooth.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/board/tiles/Bat.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/inventory/tiles/Bat.tscn" type="PackedScene" id=9]
 
 [node name="TestLevel" instance=ExtResource( 5 )]
 

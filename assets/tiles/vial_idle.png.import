@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/batwing_spawning.png-56a05cd96e01bbb87177214830aca663.stex"
+path="res://.import/vial_idle.png-035ef0ef31d17944943635adf0af1d51.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/batwing_spawning.png"
-dest_files=[ "res://.import/batwing_spawning.png-56a05cd96e01bbb87177214830aca663.stex" ]
+source_file="res://assets/tiles/vial_idle.png"
+dest_files=[ "res://.import/vial_idle.png-035ef0ef31d17944943635adf0af1d51.stex" ]
 
 [params]
 

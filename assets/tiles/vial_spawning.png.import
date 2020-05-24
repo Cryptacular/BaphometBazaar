@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/vial.png-efd2885623522036f674854dc6c431a9.stex"
+path="res://.import/vial_spawning.png-ea048369afbeb6f2644e7320439d678b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/vial.png"
-dest_files=[ "res://.import/vial.png-efd2885623522036f674854dc6c431a9.stex" ]
+source_file="res://assets/tiles/vial_spawning.png"
+dest_files=[ "res://.import/vial_spawning.png-ea048369afbeb6f2644e7320439d678b.stex" ]
 
 [params]
 
