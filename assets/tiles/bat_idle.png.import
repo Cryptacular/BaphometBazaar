@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pentagram.png-47f647ba083717c2269fb69a1fe98353.stex"
+path="res://.import/bat_idle.png-983a7ef305cd52ab130e7bee754923af.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/pentagram.png"
-dest_files=[ "res://.import/pentagram.png-47f647ba083717c2269fb69a1fe98353.stex" ]
+source_file="res://assets/tiles/bat_idle.png"
+dest_files=[ "res://.import/bat_idle.png-983a7ef305cd52ab130e7bee754923af.stex" ]
 
 [params]
 

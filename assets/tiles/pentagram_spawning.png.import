@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/batwing.png-9186596e35b77430eb145752e2331ab6.stex"
+path="res://.import/pentagram_spawning.png-5bc3c1205da7ab892d067071cea2bc40.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/batwing.png"
-dest_files=[ "res://.import/batwing.png-9186596e35b77430eb145752e2331ab6.stex" ]
+source_file="res://assets/tiles/pentagram_spawning.png"
+dest_files=[ "res://.import/pentagram_spawning.png-5bc3c1205da7ab892d067071cea2bc40.stex" ]
 
 [params]
 
