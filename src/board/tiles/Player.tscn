@@ -43,5 +43,5 @@ Type = "Player"
 position = Vector2( 16, 5 )
 frames = SubResource( 7 )
 animation = "idle"
-frame = 4
+frame = 2
 playing = true
