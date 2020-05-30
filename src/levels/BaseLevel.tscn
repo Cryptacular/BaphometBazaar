@@ -1,16 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/levels/BaseLevel.gd" type="Script" id=1]
 [ext_resource path="res://src/board/Grid.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/board/tiles/ToothTile.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/board/tiles/PentagramTile.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/board/tiles/BatwingTile.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/board/tiles/VialRoundTile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/inventory/Inventory.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/inventory/tiles/Pentagram.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/inventory/tiles/Batwing.tscn" type="PackedScene" id=9]
-[ext_resource path="res://src/inventory/tiles/VialRound.tscn" type="PackedScene" id=10]
-[ext_resource path="res://src/inventory/tiles/Tooth.tscn" type="PackedScene" id=11]
 
 [node name="BaseLevel" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,8 +13,6 @@ scale = Vector2( 3, 3 )
 width = 9
 height = 9
 player_initial_position = Vector2( 4, 4 )
-available_tiles = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 3 ) ]
 
 [node name="Inventory" parent="." instance=ExtResource( 7 )]
 position = Vector2( 96, 96 )
-available_tiles = [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ]
