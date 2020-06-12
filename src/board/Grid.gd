@@ -222,14 +222,14 @@ func _detect_matches() -> bool:
 func _swap_tiles(a: Vector2, b: Vector2) -> void:
 	if a == null or b == null:
 		return
-	if a.y >= len(_rows):
-		a.y = 0
-	if b.y >= len(_rows):
-		b.y = 0
-	if a.x >= len(_rows[a.y]):
-		a.x = 0
-	if b.x >= len(_rows[b.y]):
-		b.x = 0
+	if a.y >= len(_rows) or a.y < 0:
+		return
+	if b.y >= len(_rows) or b.y < 0:
+		return
+	if a.x >= len(_rows[a.y]) or a.x < 0:
+		return
+	if b.x >= len(_rows[b.y]) or b.x < 0:
+		return
 	
 	var a_cell := get_cell(a.x, a.y)
 	var b_cell := get_cell(b.x, b.y)
