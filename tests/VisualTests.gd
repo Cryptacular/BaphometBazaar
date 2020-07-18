@@ -29,7 +29,7 @@ func _spawn_tiles():
 		
 		var t = load(tile).instance()
 		t.scale = Vector2(3, 3)
-		t.position = Vector2(32 + 32 * 4 * i, 32 * 4)
+		t.position = Vector2(32 * 4, 32 + 32 * 4 * i)
 		add_child(t)
 		active_tiles.append(t)
 		

@@ -6,20 +6,20 @@
 script = ExtResource( 8 )
 
 [node name="SpawnButton" type="Button" parent="."]
-margin_left = 166.562
-margin_top = 838.934
-margin_right = 280.562
-margin_bottom = 882.934
+margin_left = 567.921
+margin_top = 183.249
+margin_right = 681.921
+margin_bottom = 227.249
 text = "Spawn"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DeathButton" type="Button" parent="."]
-margin_left = 347.06
-margin_top = 838.934
-margin_right = 461.06
-margin_bottom = 882.934
+margin_left = 748.419
+margin_top = 183.249
+margin_right = 862.419
+margin_bottom = 227.249
 text = "Kill"
 __meta__ = {
 "_edit_use_anchors_": false

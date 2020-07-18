@@ -4,9 +4,12 @@
 
 [node name="Gut" type="Control"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_right = 740.0
-margin_bottom = 250.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -340.0
+margin_bottom = -627.0
 rect_min_size = Vector2( 740, 250 )
+rect_scale = Vector2( 1.48, 1.48 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

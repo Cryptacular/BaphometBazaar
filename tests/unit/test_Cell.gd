@@ -2,14 +2,14 @@ extends "res://addons/gut/test.gd"
 
 var baseTile = load("res://src/board/tiles/BaseTile.tscn")
 var pentagramTile = load("res://src/board/tiles/PentagramTile.tscn")
-var batwingTile = load("res://src/board/tiles/BatwingTile.tscn")
+var batTile = load("res://src/board/tiles/BatTile.tscn")
 var vialRoundTile = load("res://src/board/tiles/VialRoundTile.tscn")
 var vialAngularTile = load("res://src/board/tiles/VialAngularTile.tscn")
 var playerTile = load("res://src/board/tiles/Player.tscn")
 
 func test_would_match_neighbours_returns_false_if_no_matches_in_row():
 	var tile_0 = pentagramTile.instance()
-	var tile_1 = batwingTile.instance()
+	var tile_1 = batTile.instance()
 	
 	var cell_0 = Cell.new()
 	var cell_1 = Cell.new()
@@ -27,8 +27,8 @@ func test_would_match_neighbours_returns_false_if_no_matches_in_row():
 
 
 func test_would_match_neighbours_returns_true_if_matches_in_row():
-	var tile_0 = batwingTile.instance()
-	var tile_1 = batwingTile.instance()
+	var tile_0 = batTile.instance()
+	var tile_1 = batTile.instance()
 	
 	var cell_0 = Cell.new()
 	var cell_1 = Cell.new()
@@ -47,7 +47,7 @@ func test_would_match_neighbours_returns_true_if_matches_in_row():
 
 func test_would_match_neighbours_returns_false_if_no_matches_in_column():
 	var tile_0 = pentagramTile.instance()
-	var tile_1 = batwingTile.instance()
+	var tile_1 = batTile.instance()
 	
 	var cell_0 = Cell.new()
 	var cell_1 = Cell.new()
@@ -65,8 +65,8 @@ func test_would_match_neighbours_returns_false_if_no_matches_in_column():
 
 
 func test_would_match_neighbours_returns_true_if_matches_in_column():
-	var tile_0 = batwingTile.instance()
-	var tile_1 = batwingTile.instance()
+	var tile_0 = batTile.instance()
+	var tile_1 = batTile.instance()
 	
 	var cell_0 = Cell.new()
 	var cell_1 = Cell.new()

@@ -2,13 +2,13 @@ extends "res://addons/gut/test.gd"
 
 var baseTile = load("res://src/board/tiles/BaseTile.tscn")
 var pentagramTile = load("res://src/board/tiles/PentagramTile.tscn")
-var batwingTile = load("res://src/board/tiles/BatwingTile.tscn")
+var batTile = load("res://src/board/tiles/BatTile.tscn")
 var vialRoundTile = load("res://src/board/tiles/VialRoundTile.tscn")
 var vialAngularTile = load("res://src/board/tiles/VialAngularTile.tscn")
 var playerTile = load("res://src/board/tiles/Player.tscn")
 var grid_scene = load("res://src/board/Grid.tscn")
 
-var available_tiles = [baseTile, pentagramTile, batwingTile, vialRoundTile, vialAngularTile]
+var available_tiles = [baseTile, pentagramTile, batTile, vialRoundTile, vialAngularTile]
 
 
 func create_grid(width: int, height: int, player_initial_position: Vector2, available_tiles: Array):
