@@ -27,6 +27,17 @@ func move(current_position: Vector2, target_position: Vector2) -> void:
 		tween.start()
 
 
+func swap_and_return(dir: String):
+	if dir == "right":
+		$AnimationPlayer.play("SwapAndReturnRight")
+	elif dir == "left":
+		$AnimationPlayer.play("SwapAndReturnLeft")
+	elif dir == "up":
+		$AnimationPlayer.play("SwapAndReturnUp")
+	elif dir == "down":
+		$AnimationPlayer.play("SwapAndReturnDown")
+
+
 func clear() -> void:
 	var sprite = $AnimatedSprite
 	sprite.play("death")

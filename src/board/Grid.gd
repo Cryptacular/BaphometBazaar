@@ -1,19 +1,19 @@
-extends Node
+extends Node2D
 
 signal tiles_matched(type, amount)
 
 const TILE_SIZE = 32
 enum states { INIT, IDLE, BUSY }
+enum drag_states { IDLE, DRAGGING, DRAGGED }
 
 export (int) var width
 export (int) var height
-export (Vector2) var player_initial_position
 export (Array, PackedScene) var available_tiles
 
 var state = states.INIT
 var _rows := []
-var _player_tile := preload("res://src/board/tiles/Player.tscn")
-var _player_move_queue := PlayerMoveQueue.new(false, Vector2())
+var drag_start := Vector2()
+var drag_state = drag_states.IDLE
 
 
 func _ready() -> void:
@@ -43,29 +43,36 @@ func _ready() -> void:
 			
 			var tile_scene: BaseTile
 			
-			if pos == player_initial_position:
-				tile_scene = _player_tile.instance()
-			else:
+			tile_scene = _get_random_tile()
+			while cell.would_match_neighbours(tile_scene.Type):
 				tile_scene = _get_random_tile()
-				while cell.would_match_neighbours(tile_scene.Type):
-					tile_scene = _get_random_tile()
 			
 			spawn_tile(x, y, tile_scene)
 
 
-func _process(_delta: float) -> void:
-	if _player_move_queue.is_queued and state == states.IDLE:
-		move_player(_player_move_queue.direction)
-		_player_move_queue.is_queued = false
+func _input(event: InputEvent):
+	if event is InputEventScreenTouch:
+		var pos = _screen_position_to_grid_position(event.position)
+		print(pos)
+		
+		if drag_state == drag_states.IDLE and event.is_pressed():
+			drag_start = pos
+			drag_state = drag_states.DRAGGING
 	
-	if Input.is_action_just_pressed("ui_left"):
-		move_player(Vector2(-1, 0))
-	elif Input.is_action_just_pressed("ui_right"):
-		move_player(Vector2(1, 0))
-	elif Input.is_action_just_pressed("ui_up"):
-		move_player(Vector2(0, -1))
-	elif Input.is_action_just_pressed("ui_down"):
-		move_player(Vector2(0, 1))
+	if event is InputEventScreenDrag:
+		var pos = _screen_position_to_grid_position(event.position)
+		print(pos)
+		
+		if drag_state == drag_states.DRAGGING and pos != drag_start:
+			swap(drag_start, pos)
+			drag_state = drag_states.DRAGGED
+
+
+func _screen_position_to_grid_position(pos: Vector2) -> Vector2:
+	var relative_pos = pos - position
+	var x := floor(relative_pos.x / scale.x / TILE_SIZE)
+	var y := floor(relative_pos.y / scale.y / TILE_SIZE) + 1
+	return Vector2(x, y)
 
 
 func spawn_tile(x: int, y: int, tile: BaseTile) -> void:
@@ -74,6 +81,25 @@ func spawn_tile(x: int, y: int, tile: BaseTile) -> void:
 	
 	var cell := get_cell(x, y)
 	cell.set_tile(tile)
+
+
+func swap(from: Vector2, to: Vector2) -> void:
+	if state != states.IDLE:
+		return
+	
+	var x_movement = to.x - from.x
+	var y_movement = to.y - from.y
+	
+	if abs(x_movement) > 0 and abs(y_movement) > 0:
+		return
+	
+	if abs(x_movement) > 1 or abs(y_movement) > 1:
+		return
+	
+	state = states.BUSY
+	
+	_swap_tiles(from, to)
+	$TilesMovedTimer.start()
 
 
 func get_cell(x: int, y: int) -> Cell:
@@ -106,28 +132,11 @@ func set_cell(x: int, y: int, cell: Cell) -> void:
 	_rows[y][x] = cell
 
 
-func move_player(dir: Vector2) -> void:
-	if state != states.IDLE:
-		_player_move_queue = PlayerMoveQueue.new(true, dir)
-		return
-	
-	var player_position := _find_player_position()
-	
-	if player_position == Vector2(-1, -1):
-		return
-	
-	state = states.BUSY
-	
-	var swapping_tile_position := player_position + dir
-	
-	_swap_tiles(player_position, swapping_tile_position)
-	$TilesMovedTimer.start()
-
 func clear_matches() -> void:
 	var has_matches := _detect_matches()
 	
 	if !has_matches:
-		post_player_move()
+		post_move()
 		return
 	
 	for x in width:
@@ -139,8 +148,9 @@ func clear_matches() -> void:
 	$TilesClearedTimer.start()
 
 
-func post_player_move() -> void:
+func post_move() -> void:
 	state = states.IDLE
+	drag_state = drag_states.IDLE
 
 
 func _refill_columns() -> void:
@@ -177,16 +187,6 @@ func _get_random_tile() -> BaseTile:
 	var number_of_tiles_available: int = available_tiles.size()
 	var rand := floor(rand_range(0, number_of_tiles_available))
 	return (available_tiles[rand]).instance()
-
-
-func _find_player_position() -> Vector2:
-	for y in len(_rows):
-		var row: Array = _rows[y]
-		for x in len(row):
-			var cell: Cell = row[x]
-			if cell.is_player():
-				return Vector2(x, y)
-	return Vector2(-1, -1)
 
 
 func _detect_matches() -> bool:
@@ -239,12 +239,3 @@ func _swap_tiles(a: Vector2, b: Vector2) -> void:
 	
 	a_cell.set_tile(b_tile)
 	b_cell.set_tile(a_tile)
-
-
-class PlayerMoveQueue:
-	var is_queued: bool
-	var direction: Vector2
-	
-	func _init(_is_queued: bool, _direction: Vector2):
-		is_queued = _is_queued
-		direction = _direction
