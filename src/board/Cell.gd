@@ -24,6 +24,8 @@ func get_tile() -> BaseTile:
 
 
 func get_type() -> String:
+	if _tile == null:
+		return ""
 	return _tile.Type
 
 
@@ -117,7 +119,6 @@ func set_position(x, y) -> void:
 
 func set_tile(tile: BaseTile) -> void:
 	_tile = tile
-	_is_player = is_player()
 	
 	var new_position_x := _grid_to_pixel(_position_x)
 	var new_position_y := _grid_to_pixel(_position_y)
@@ -150,8 +151,10 @@ func set_down(cell: Cell) -> void:
 	_down = cell
 
 
-func is_player() -> bool:
-	return _tile != null and get_type() == "Player"
+func swap_and_return(dir: String) -> void:
+	if _tile == null:
+		return
+	_tile.swap_and_return(dir)
 
 
 func _grid_to_pixel(pos: int) -> int:

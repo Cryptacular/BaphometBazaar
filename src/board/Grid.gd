@@ -4,7 +4,6 @@ signal tiles_matched(type, amount)
 
 const TILE_SIZE = 32
 enum states { INIT, IDLE, BUSY }
-enum drag_states { IDLE, DRAGGING, DRAGGED }
 
 export (int) var width
 export (int) var height
@@ -13,7 +12,6 @@ export (Array, PackedScene) var available_tiles
 var state = states.INIT
 var _rows := []
 var drag_start := Vector2()
-var drag_state = drag_states.IDLE
 
 
 func _ready() -> void:
@@ -53,25 +51,21 @@ func _ready() -> void:
 func _input(event: InputEvent):
 	if event is InputEventScreenTouch:
 		var pos = _screen_position_to_grid_position(event.position)
-		print(pos)
 		
-		if drag_state == drag_states.IDLE and event.is_pressed():
+		if event.is_pressed():
 			drag_start = pos
-			drag_state = drag_states.DRAGGING
 	
 	if event is InputEventScreenDrag:
 		var pos = _screen_position_to_grid_position(event.position)
-		print(pos)
 		
-		if drag_state == drag_states.DRAGGING and pos != drag_start:
+		if pos != drag_start:
 			swap(drag_start, pos)
-			drag_state = drag_states.DRAGGED
 
 
 func _screen_position_to_grid_position(pos: Vector2) -> Vector2:
 	var relative_pos = pos - position
 	var x := floor(relative_pos.x / scale.x / TILE_SIZE)
-	var y := floor(relative_pos.y / scale.y / TILE_SIZE) + 1
+	var y := floor(relative_pos.y / scale.y / TILE_SIZE)
 	return Vector2(x, y)
 
 
@@ -98,8 +92,27 @@ func swap(from: Vector2, to: Vector2) -> void:
 	
 	state = states.BUSY
 	
-	_swap_tiles(from, to)
-	$TilesMovedTimer.start()
+	var from_cell = get_cell(from.x, from.y)
+	var to_cell = get_cell(to.x, to.y)
+	
+	if _would_match_after_swap(from, to):
+		_swap_tiles(from, to)
+		$TilesMovedTimer.start()
+	else:
+		if to.x - from.x > 0:
+			from_cell.swap_and_return("right")
+			to_cell.swap_and_return("left")
+		elif to.x - from.x < 0:
+			from_cell.swap_and_return("left")
+			to_cell.swap_and_return("right")
+		elif to.y - from.y > 0:
+			from_cell.swap_and_return("down")
+			to_cell.swap_and_return("up")
+		elif to.y - from.y < 0:
+			from_cell.swap_and_return("up")
+			to_cell.swap_and_return("down")
+		
+		post_move()
 
 
 func get_cell(x: int, y: int) -> Cell:
@@ -150,7 +163,6 @@ func clear_matches() -> void:
 
 func post_move() -> void:
 	state = states.IDLE
-	drag_state = drag_states.IDLE
 
 
 func _refill_columns() -> void:
@@ -239,3 +251,37 @@ func _swap_tiles(a: Vector2, b: Vector2) -> void:
 	
 	a_cell.set_tile(b_tile)
 	b_cell.set_tile(a_tile)
+
+
+func _would_match_after_swap(a: Vector2, b: Vector2) -> bool:
+	var type_grid = []
+	for y in range(height):
+		var row = []
+		for x in range(width):
+			row.append(get_cell(x, y).get_type())
+		type_grid.append(row)
+	
+	var a_type = type_grid[a.y][a.x]
+	var b_type = type_grid[b.y][b.x]
+	
+	type_grid[a.y][a.x] = b_type
+	type_grid[b.y][b.x] = a_type
+	
+	for y in range(height):
+		for x in range(2, width):
+			var current_cell = type_grid[y][x]
+			var left_1_cell = type_grid[y][x - 1]
+			var left_2_cell = type_grid[y][x - 2]
+			if current_cell == left_1_cell and current_cell == left_2_cell:
+				return true
+		
+			if y < 2:
+				continue
+			
+			var up_1_cell = type_grid[y - 1][x]
+			var up_2_cell = type_grid[y - 2][x]
+			
+			if current_cell == up_1_cell and current_cell == up_2_cell:
+				return true
+	
+	return false

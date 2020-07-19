@@ -55,5 +55,6 @@ animations = [ {
 Type = "Pentagram"
 
 [node name="AnimatedSprite" parent="." index="0"]
+position = Vector2( 16, 16 )
 frames = SubResource( 8 )
 animation = "death"
