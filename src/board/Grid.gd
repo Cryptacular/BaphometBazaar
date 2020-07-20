@@ -268,20 +268,20 @@ func _would_match_after_swap(a: Vector2, b: Vector2) -> bool:
 	type_grid[b.y][b.x] = a_type
 	
 	for y in range(height):
-		for x in range(2, width):
+		for x in range(width):
 			var current_cell = type_grid[y][x]
-			var left_1_cell = type_grid[y][x - 1]
-			var left_2_cell = type_grid[y][x - 2]
-			if current_cell == left_1_cell and current_cell == left_2_cell:
-				return true
+			
+			if x >= 2:
+				var left_1_cell = type_grid[y][x - 1]
+				var left_2_cell = type_grid[y][x - 2]
+				if current_cell == left_1_cell and current_cell == left_2_cell:
+					return true
 		
-			if y < 2:
-				continue
-			
-			var up_1_cell = type_grid[y - 1][x]
-			var up_2_cell = type_grid[y - 2][x]
-			
-			if current_cell == up_1_cell and current_cell == up_2_cell:
-				return true
+			if y >= 2:
+				var up_1_cell = type_grid[y - 1][x]
+				var up_2_cell = type_grid[y - 2][x]
+				
+				if current_cell == up_1_cell and current_cell == up_2_cell:
+					return true
 	
 	return false
