@@ -274,6 +274,7 @@ func _would_match_after_swap(a: Vector2, b: Vector2) -> bool:
 			if x >= 2:
 				var left_1_cell = type_grid[y][x - 1]
 				var left_2_cell = type_grid[y][x - 2]
+
 				if current_cell == left_1_cell and current_cell == left_2_cell:
 					return true
 		

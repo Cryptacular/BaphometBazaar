@@ -16,12 +16,13 @@ scale = Vector2( 3, 3 )
 
 [node name="AmountLabel" type="RichTextLabel" parent="."]
 anchor_right = 16.0
-margin_left = 60.0
-margin_right = 153.0
-margin_bottom = 88.0
+anchor_bottom = 16.0
+margin_left = 9.56754
+margin_top = 60.0
+margin_right = 79.5675
+margin_bottom = 137.0
 rect_clip_content = false
 custom_fonts/normal_font = SubResource( 1 )
-text = "0"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
