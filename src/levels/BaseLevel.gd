@@ -6,8 +6,11 @@ const ACTIVE_AREA_WIDTH = 1080.0 - (108 * 2)
 
 onready var root = get_tree().get_root()
 
+var grid_position: Vector2
+
 func _ready() -> void:
 	$Grid.connect("tiles_matched", $Inventory, "on_tiles_matched")
+	$Grid.connect("tiles_matched", self, "screen_shake")
 	
 	var root := get_tree().get_root()
 	layout()
@@ -24,13 +27,32 @@ func layout():
 		
 		grid.position.x = offset_x
 		$Inventory.position.x = offset_x
+		$Orders.position.x = offset_x
 	else:
 		grid.position.x = GUTTER
 		$Inventory.position.x = GUTTER
+		$Orders.position.x = GUTTER
 
 	var grid_width = 32 * grid.width
 	var grid_scale = ACTIVE_AREA_WIDTH / grid_width
 	grid.scale = Vector2(grid_scale, grid_scale)
+	
+	grid_position = grid.position
+
 
 func on_root_size_changed() -> void:
 	layout()
+
+
+func screen_shake(_type: String, _amount: int) -> void:
+	var grid = $Grid
+	var shake_amount = 20
+	
+	for _i in range(4):
+		var x = randi() % shake_amount - (shake_amount / 2)
+		var y = randi() % shake_amount - (shake_amount / 2)
+		grid.position = grid_position + Vector2(x, y)
+		
+		yield(get_tree().create_timer(0.1), "timeout")
+	
+	grid.position = grid_position

@@ -10,7 +10,7 @@ func _ready() -> void:
 	var i = 0
 	for scene in available_tiles:
 		var tile: Node2D = scene.instance()
-		tile.position = Vector2(i * (TILE_SIZE + GUTTER_SIZE) * 3, 0)
+		tile.position = Vector2(i * (TILE_SIZE + GUTTER_SIZE) * 4, 0)
 		
 		var type: String = tile.Type
 		tiles[type] = tile
