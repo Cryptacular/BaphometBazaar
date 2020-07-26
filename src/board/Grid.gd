@@ -15,6 +15,10 @@ var drag_start := Vector2()
 
 
 func _ready() -> void:
+	assert(width != null and width > 0)
+	assert(height != null and height > 0)
+	assert(available_tiles != null and len(available_tiles) > 0)
+	
 	randomize()
 	
 	state = states.IDLE

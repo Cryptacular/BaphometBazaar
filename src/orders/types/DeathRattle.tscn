@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/orders/types/BaseOrder.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/ingredients/Bat.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ingredients/Pentagram.tscn" type="PackedScene" id=3]
+
+[node name="DeathRattle" instance=ExtResource( 1 )]
+order_name = "Death Rattle"
+ingredients = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 3 ) ]
