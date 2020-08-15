@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "Area2D",
 "class": "BaseOrder",
 "language": "GDScript",
 "path": "res://src/orders/types/BaseOrder.gd"
@@ -23,11 +23,29 @@ _global_script_classes=[ {
 "class": "Cell",
 "language": "GDScript",
 "path": "res://src/board/Cell.gd"
+}, {
+"base": "Node2D",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://src/inventory/Inventory.gd"
+}, {
+"base": "Node2D",
+"class": "InventoryItem",
+"language": "GDScript",
+"path": "res://src/inventory/tiles/InventoryItem.gd"
+}, {
+"base": "Node2D",
+"class": "Orders",
+"language": "GDScript",
+"path": "res://src/orders/Orders.gd"
 } ]
 _global_script_class_icons={
 "BaseOrder": "",
 "BaseTile": "",
-"Cell": ""
+"Cell": "",
+"Inventory": "",
+"InventoryItem": "",
+"Orders": ""
 }
 
 [application]

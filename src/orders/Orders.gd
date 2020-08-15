@@ -1,7 +1,9 @@
 extends Node2D
 
+class_name Orders
+
 signal order_received(type, variant)
-signal order_fulfilled(type)
+signal order_fulfilled(type, ingredients)
 
 export (Array, PackedScene) var order_types
 export (int) var order_spawn_time_seconds
@@ -31,6 +33,7 @@ func _spawn_order():
 	add_child(order)
 	active_orders.append(order)
 	
+	order.connect("order_fulfilled", self, "_on_order_fulfilled")
 	order.connect("order_expired", self, "_on_order_expired")
 
 
@@ -39,6 +42,19 @@ func _layout():
 		var order: BaseOrder = active_orders[i]
 		order.target_position = Vector2(i * ORDER_WIDTH, 0)
 		order.move_to_target_position()
+
+
+func on_inventory_updated(ingredients: Dictionary) -> void:
+	for order in active_orders:
+		if order == null:
+			return
+		order.on_inventory_updated(ingredients)
+
+
+func _on_order_fulfilled(order: BaseOrder, items: Dictionary):
+	emit_signal("order_fulfilled", order, items)
+	active_orders.erase(order)
+	_layout()
 
 
 func _on_order_expired(order):
