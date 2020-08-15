@@ -18,6 +18,7 @@ enum States {
 
 var required_ingredients = {}
 var state = States.IDLE
+var inventory
 
 func _ready():
 	assert(order_name != null and len(order_name) > 0)
@@ -43,6 +44,8 @@ func _ready():
 	_spawn()
 	_start_progress_bar()
 	move_to_target_position()
+	
+	_check_against_inventory(inventory.state)
 	
 	get_tree().create_timer(expiry_seconds).connect("timeout", self, "_expire")
 
@@ -115,15 +118,7 @@ func _fulfill():
 	queue_free()
 
 
-func _has_all_ingredients(inventory: Dictionary) -> bool:
-	for ingredient in inventory:
-		if required_ingredients.has(ingredient) and inventory[ingredient] < required_ingredients[ingredient]:
-			return false
-	
-	return true
-
-
-func on_inventory_updated(inventory: Dictionary):
+func _check_against_inventory(inventory: Dictionary) -> void:
 	var bg = $Background
 	
 	if _has_all_ingredients(inventory):
@@ -132,6 +127,21 @@ func on_inventory_updated(inventory: Dictionary):
 	else:
 		bg.play("default")
 		state = States.IDLE
+
+
+func _has_all_ingredients(inventory: Dictionary) -> bool:
+	for ingredient in required_ingredients:
+		if !inventory.has(ingredient):
+			return false
+		
+		if inventory[ingredient] < required_ingredients[ingredient]:
+			return false
+	
+	return true
+
+
+func on_inventory_updated(inventory: Dictionary):
+	_check_against_inventory(inventory)
 
 
 func _on_order_clicked(viewport, event: InputEvent, shape_idx):

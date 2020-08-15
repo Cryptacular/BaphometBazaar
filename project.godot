@@ -25,11 +25,6 @@ _global_script_classes=[ {
 "path": "res://src/board/Cell.gd"
 }, {
 "base": "Node2D",
-"class": "Inventory",
-"language": "GDScript",
-"path": "res://src/inventory/Inventory.gd"
-}, {
-"base": "Node2D",
 "class": "InventoryItem",
 "language": "GDScript",
 "path": "res://src/inventory/tiles/InventoryItem.gd"
@@ -43,7 +38,6 @@ _global_script_class_icons={
 "BaseOrder": "",
 "BaseTile": "",
 "Cell": "",
-"Inventory": "",
 "InventoryItem": "",
 "Orders": ""
 }

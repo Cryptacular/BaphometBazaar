@@ -11,6 +11,8 @@ onready var safe_area = OS.get_window_safe_area()
 var grid_position: Vector2
 
 func _ready() -> void:
+	$Orders.inventory = $Inventory
+	
 	$Grid.connect("tiles_matched", $Inventory, "on_tiles_matched")
 	$Grid.connect("tiles_matched", self, "screen_shake")
 	

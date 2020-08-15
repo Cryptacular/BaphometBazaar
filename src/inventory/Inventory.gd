@@ -1,7 +1,5 @@
 extends Node2D
 
-class_name Inventory
-
 signal inventory_updated(items)
 
 export (Array, PackedScene) var available_tiles = []

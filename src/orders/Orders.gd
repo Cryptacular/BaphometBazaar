@@ -8,6 +8,7 @@ signal order_fulfilled(type, ingredients)
 export (Array, PackedScene) var order_types
 export (int) var order_spawn_time_seconds
 export (int) var order_expiry_time_seconds
+export (PackedScene) var inventory
 
 var active_orders = []
 
@@ -30,6 +31,8 @@ func _spawn_order():
 	order.position = Vector2(1080, 0)
 	order.target_position = Vector2(i * ORDER_WIDTH, 0)
 	order.expiry_seconds = order_expiry_time_seconds
+	order.inventory = inventory
+	
 	add_child(order)
 	active_orders.append(order)
 	
