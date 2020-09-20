@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 const SCREEN_RATIO = 16.0 / 9.0

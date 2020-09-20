@@ -1,3 +1,4 @@
+tool
 extends Sprite
 
 export (String) var Name

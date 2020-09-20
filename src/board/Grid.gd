@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 signal tiles_matched(type, amount)

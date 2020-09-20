@@ -17,8 +17,20 @@
 order_types = [ ExtResource( 10 ) ]
 order_spawn_time_seconds = 5
 order_expiry_time_seconds = 20
+inventory = Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 108, 1328 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://src/inventory/Inventory.gd" ),"available_tiles":[ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],"TILE_SIZE":16,"GUTTER_SIZE":4,"tiles":[ Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 0, 0 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://src/inventory/tiles/InventoryItem.gd" ),"Type":"Bat","_amount":0)
+, Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 80, 0 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://src/inventory/tiles/InventoryItem.gd" ),"Type":"Pentagram","_amount":0)
+, Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 160, 0 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://src/inventory/tiles/InventoryItem.gd" ),"Type":"VialRound","_amount":0)
+, Object(Node2D,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"visible":true,"modulate":Color( 1, 1, 1, 1 ),"self_modulate":Color( 1, 1, 1, 1 ),"show_behind_parent":false,"light_mask":1,"material":null,"use_parent_material":false,"position":Vector2( 240, 0 ),"rotation":0.0,"scale":Vector2( 1, 1 ),"z_index":0,"z_as_relative":true,"script":Resource( "res://src/inventory/tiles/InventoryItem.gd" ),"Type":"Tooth","_amount":0)
+ ],"state":{
+"Bat": 0,
+"Pentagram": 0,
+"Tooth": 0,
+"VialRound": 0
+})
+
 
 [node name="Grid" parent="." index="1"]
+scale = Vector2( 3.375, 3.375 )
 width = 8
 height = 8
 available_tiles = [ ExtResource( 4 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 1 ) ]
