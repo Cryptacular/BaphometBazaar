@@ -16,7 +16,6 @@
 [node name="Orders" parent="." index="1"]
 order_types = [ ExtResource( 10 ) ]
 order_spawn_time_seconds = 5
-order_expiry_time_seconds = 20
 
 [node name="Inventory" parent="." index="2"]
 available_tiles = [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]

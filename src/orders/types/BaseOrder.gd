@@ -1,4 +1,3 @@
-tool
 extends Area2D
 
 class_name BaseOrder
@@ -7,6 +6,7 @@ signal order_fulfilled(order, ingredients)
 signal order_expired(order)
 
 export (String) var order_name
+export (int) var worth
 export (int) var expiry_seconds
 export (Array, PackedScene) var ingredients = []
 export (Vector2) var target_position
@@ -22,15 +22,18 @@ var required_ingredients = {}
 var state = States.IDLE
 var inventory
 
+
 func _ready():
 	assert(order_name != null and len(order_name) > 0)
 	assert(ingredients != null and len(ingredients) > 0)
 	assert(target_position != null)
+	assert(worth != null and worth > 0)
 	assert(expiry_seconds != null and expiry_seconds > 0)
 	
 	modulate.a = 0
 	
 	$Title.text = order_name
+	$Worth.text = "$" + str(worth)
 	
 	for i in len(ingredients):
 		var ing = ingredients[i].instance()

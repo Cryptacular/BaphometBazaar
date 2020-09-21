@@ -336,17 +336,33 @@ frames = SubResource( 73 )
 position = Vector2( 134.242, 132.408 )
 shape = SubResource( 74 )
 
-[node name="Title" type="RichTextLabel" parent="."]
+[node name="Title" type="Label" parent="."]
 margin_left = 25.0
-margin_top = 31.0
+margin_top = 22.0
 margin_right = 238.0
-margin_bottom = 88.0
+margin_bottom = 66.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/normal_font = SubResource( 75 )
-custom_colors/default_color = Color( 0.0980392, 0.0980392, 0.101961, 1 )
+custom_fonts/font = SubResource( 75 )
+custom_colors/font_color = Color( 0.0980392, 0.0980392, 0.101961, 1 )
 text = "Order Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Worth" type="Label" parent="."]
+margin_left = 180.0
+margin_top = 94.0
+margin_right = 238.0
+margin_bottom = 135.0
+rect_min_size = Vector2( 40, 40 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 75 )
+custom_colors/font_color = Color( 0.0980392, 0.0980392, 0.101961, 1 )
+text = "$5"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
