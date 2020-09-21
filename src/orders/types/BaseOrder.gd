@@ -15,6 +15,7 @@ const PROGRESS_BAR_ANIMATION_FRAMES = 68
 enum States {
 	IDLE,
 	FULFILLABLE,
+	FULFILLING,
 	GAMEOVER
 }
 
@@ -99,6 +100,7 @@ func _expire():
 
 
 func _fulfill():
+	state = States.FULFILLING
 	emit_signal("order_fulfilled", self, required_ingredients, worth)
 	
 	var tween = $DeathTween
