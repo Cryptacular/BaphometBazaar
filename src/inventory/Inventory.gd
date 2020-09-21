@@ -20,7 +20,7 @@ func _ready() -> void:
 		var type: String = tile.Type
 		tiles.append(tile)
 		
-		add_child(tile)
+		$Rows/Items.add_child(tile)
 		state[type] = 0
 		i += 1
 

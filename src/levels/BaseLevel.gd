@@ -9,6 +9,7 @@ const ACTIVE_AREA_WIDTH = 1080.0 - (108 * 2)
 
 onready var root := get_tree().get_root()
 onready var safe_area := OS.get_window_safe_area()
+onready var in_game_stats_width = $InGameStats.rect_size.x
 
 var grid_position: Vector2
 
@@ -44,6 +45,7 @@ func layout():
 		
 		grid.position.x = offset_x
 		in_game_stats.margin_right = offset_x_right
+		in_game_stats.margin_left = offset_x_right - in_game_stats_width
 		orders.position.x = offset_x
 		inventory.position.x = offset_x
 	else:

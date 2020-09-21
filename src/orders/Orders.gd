@@ -38,7 +38,7 @@ func _spawn_order():
 	order.target_position = Vector2(i * ORDER_WIDTH, 0)
 	order.inventory = inventory
 	
-	add_child(order)
+	$Rows/Orders.add_child(order)
 	active_orders.append(order)
 	
 	order.connect("order_fulfilled", self, "_on_order_fulfilled")
