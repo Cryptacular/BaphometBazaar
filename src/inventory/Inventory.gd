@@ -35,7 +35,7 @@ func on_tiles_matched(type: String, _amount: int) -> void:
 	render()
 
 
-func on_order_fulfilled(_order: BaseOrder, ingredients: Dictionary) -> void:
+func on_order_fulfilled(_order: BaseOrder, ingredients: Dictionary, _worth: int) -> void:
 	for type in ingredients:
 		if state[type] == null:
 			return

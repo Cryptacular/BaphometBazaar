@@ -2,7 +2,7 @@ extends Area2D
 
 class_name BaseOrder
 
-signal order_fulfilled(order, ingredients)
+signal order_fulfilled(order, ingredients, worth)
 signal order_expired(order)
 
 export (String) var order_name
@@ -63,20 +63,6 @@ func move_to_target_position():
 		tween.start()
 
 
-func fulfil():
-	if state == States.GAMEOVER:
-		return
-	
-	var items := {}
-	for ingredient in ingredients:
-		if items[ingredient.Name]:
-			items[ingredient.Name] += 1
-		else:
-			items[ingredient.Name] = 1
-	
-	emit_signal("order_fulfilled", order_name, items)
-
-
 func _spawn():
 	var tween = $FadeInTween
 	var start_color = Color(1, 1, 1, 0)
@@ -113,7 +99,7 @@ func _expire():
 
 
 func _fulfill():
-	emit_signal("order_fulfilled", self, required_ingredients)
+	emit_signal("order_fulfilled", self, required_ingredients, worth)
 	
 	var tween = $DeathTween
 	var start_color = Color(1, 1, 1, 1)

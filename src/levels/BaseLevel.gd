@@ -21,6 +21,7 @@ func _ready() -> void:
 	
 	$Inventory.connect("inventory_updated", $Orders, "on_inventory_updated")
 	$Orders.connect("order_fulfilled", $Inventory, "on_order_fulfilled")
+	$Orders.connect("order_fulfilled", $InGameStats, "on_order_fulfilled")
 	
 	layout()
 	root.connect("size_changed", self, "on_root_size_changed")
@@ -31,7 +32,7 @@ func layout():
 		return
 	
 	var grid = $Grid
-	var game_timer = $GameTimer
+	var in_game_stats = $InGameStats
 	var orders = $Orders
 	var inventory = $Inventory
 	
@@ -42,7 +43,7 @@ func layout():
 		var offset_x_right = upscaled_size.x - offset_x
 		
 		grid.position.x = offset_x
-		game_timer.margin_right = offset_x_right
+		in_game_stats.margin_right = offset_x_right
 		orders.position.x = offset_x
 		inventory.position.x = offset_x
 	else:
@@ -50,8 +51,8 @@ func layout():
 		orders.position.x = GUTTER
 		inventory.position.x = GUTTER
 
-	game_timer.margin_top = safe_area.position.y + GUTTER
-	game_timer.margin_bottom = game_timer.margin_top + 80
+	in_game_stats.margin_top = safe_area.position.y + GUTTER / 2
+	in_game_stats.margin_bottom = in_game_stats.margin_top + 80
 	orders.position.y += floor(safe_area.position.y * 0.75)
 	inventory.position.y += floor(safe_area.position.y * 0.5)
 
@@ -80,5 +81,5 @@ func screen_shake(_type: String, _amount: int) -> void:
 	grid.position = grid_position
 
 
-func _on_GameTimer_timeout():
+func _on_InGameStats_timeout():
 	emit_signal("gameover")

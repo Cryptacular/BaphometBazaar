@@ -4,7 +4,7 @@ extends Node2D
 class_name Orders
 
 signal order_received(type, variant)
-signal order_fulfilled(type, ingredients)
+signal order_fulfilled(type, ingredients, worth)
 
 export (Array, PackedScene) var order_types
 export (int) var order_spawn_time_seconds
@@ -65,11 +65,11 @@ func on_inventory_updated(ingredients: Dictionary) -> void:
 		order.on_inventory_updated(ingredients)
 
 
-func _on_order_fulfilled(order: BaseOrder, items: Dictionary):
+func _on_order_fulfilled(order: BaseOrder, items: Dictionary, worth):
 	if state == states.GAMEOVER:
 		return
 	
-	emit_signal("order_fulfilled", order, items)
+	emit_signal("order_fulfilled", order, items, worth)
 	active_orders.erase(order)
 	_layout()
 
