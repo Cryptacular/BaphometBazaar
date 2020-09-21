@@ -311,10 +311,10 @@ animations = [ {
 "speed": 1.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=75]
+[sub_resource type="RectangleShape2D" id=74]
 extents = Vector2( 120.514, 126.901 )
 
-[sub_resource type="DynamicFont" id=74]
+[sub_resource type="DynamicFont" id=75]
 size = 32
 font_data = ExtResource( 2 )
 
@@ -334,7 +334,7 @@ frames = SubResource( 73 )
 
 [node name="ClickableArea" type="CollisionShape2D" parent="."]
 position = Vector2( 134.242, 132.408 )
-shape = SubResource( 75 )
+shape = SubResource( 74 )
 
 [node name="Title" type="RichTextLabel" parent="."]
 margin_left = 25.0
@@ -344,7 +344,7 @@ margin_bottom = 88.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/normal_font = SubResource( 74 )
+custom_fonts/normal_font = SubResource( 75 )
 custom_colors/default_color = Color( 0.0980392, 0.0980392, 0.101961, 1 )
 text = "Order Name"
 __meta__ = {

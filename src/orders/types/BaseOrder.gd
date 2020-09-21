@@ -14,7 +14,8 @@ export (Vector2) var target_position
 const PROGRESS_BAR_ANIMATION_FRAMES = 68
 enum States {
 	IDLE,
-	FULFILLABLE
+	FULFILLABLE,
+	GAMEOVER
 }
 
 var required_ingredients = {}
@@ -60,6 +61,9 @@ func move_to_target_position():
 
 
 func fulfil():
+	if state == States.GAMEOVER:
+		return
+	
 	var items := {}
 	for ingredient in ingredients:
 		if items[ingredient.Name]:
@@ -87,6 +91,9 @@ func _start_progress_bar():
 
 
 func _expire():
+	if state == States.GAMEOVER:
+		return
+	
 	var tween = $DeathTween
 	var start_color = Color(1, 1, 1, 1)
 	var finish_color = Color(1, 1, 1, 0)
@@ -151,3 +158,8 @@ func _on_order_clicked(viewport, event: InputEvent, shape_idx):
 	
 	if event is InputEventScreenTouch and event.is_pressed():
 		_fulfill()
+
+
+func on_game_over():
+	$ProgressBar.stop()
+	state = States.GAMEOVER

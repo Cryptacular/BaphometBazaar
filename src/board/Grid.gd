@@ -4,7 +4,7 @@ extends Node2D
 signal tiles_matched(type, amount)
 
 const TILE_SIZE = 32
-enum states { INIT, IDLE, BUSY }
+enum states { INIT, IDLE, BUSY, GAMEOVER }
 
 export (int) var width
 export (int) var height
@@ -167,7 +167,8 @@ func clear_matches() -> void:
 
 
 func post_move() -> void:
-	state = states.IDLE
+	if state != states.GAMEOVER:
+		state = states.IDLE
 
 
 func _refill_columns() -> void:
@@ -291,3 +292,7 @@ func _would_match_after_swap(a: Vector2, b: Vector2) -> bool:
 					return true
 	
 	return false
+
+
+func _on_gameover():
+	state = states.GAMEOVER
