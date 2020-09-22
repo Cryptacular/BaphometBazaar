@@ -50,7 +50,10 @@ func _ready() -> void:
 			while cell.would_match_neighbours(tile_scene.Type):
 				tile_scene = _get_random_tile()
 			
-			spawn_tile(x, y, tile_scene)
+			var time_scale = 0.3
+			var height_scale = (height - y) / floor(height)
+			var width_scale = (width - x) / floor(width)
+			get_tree().create_timer((height_scale + width_scale) * time_scale).connect("timeout", self, "spawn_tile", [x, y, tile_scene])
 
 
 func _input(event: InputEvent):

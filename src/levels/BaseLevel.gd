@@ -15,6 +15,9 @@ var grid_position: Vector2
 
 
 func _ready() -> void:
+	for element in [$InGameStats, $Orders, $Inventory]:
+		fade_in(element)
+	
 	$Orders.inventory = $Inventory
 	
 	$Grid.connect("tiles_matched", $Inventory, "on_tiles_matched")
@@ -26,6 +29,17 @@ func _ready() -> void:
 	
 	layout()
 	root.connect("size_changed", self, "on_root_size_changed")
+
+
+func fade_in(element: Node2D):
+	var tween = $FadeInTween
+	var start_color = Color(1, 1, 1, 0)
+	var finish_color = Color(1, 1, 1, 1)
+	
+	tween.interpolate_property(element, "modulate", start_color, finish_color, 3, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	
+	if !tween.is_active():
+		tween.start()
 
 
 func layout():

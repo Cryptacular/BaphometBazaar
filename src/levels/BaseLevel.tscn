@@ -26,6 +26,8 @@ position = Vector2( 108, 921 )
 scale = Vector2( 3.4, 3.4 )
 width = 9
 height = 9
-[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
+
+[node name="FadeInTween" type="Tween" parent="."]
 [connection signal="gameover" from="." to="Grid" method="_on_gameover"]
+[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
 [connection signal="timeout" from="InGameStats" to="." method="_on_InGameStats_timeout"]

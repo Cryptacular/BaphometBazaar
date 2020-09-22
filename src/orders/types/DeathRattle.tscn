@@ -7,7 +7,7 @@
 [node name="DeathRattle" instance=ExtResource( 1 )]
 order_name = "Death Rattle"
 worth = 5
-expiry_seconds = 15
+expiry_seconds = 25
 ingredients = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 3 ) ]
 
 [node name="ClickableArea" parent="." index="2"]
