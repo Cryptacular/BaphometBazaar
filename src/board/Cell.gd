@@ -99,7 +99,7 @@ func get_matching_cells_y() -> Array:
 
 
 func _matches(cell: Cell) -> bool:
-	return get_tile().Type == cell.get_tile().Type
+	return get_type() == cell.get_type()
 
 
 func would_match_neighbours(type: String) -> bool:
@@ -117,15 +117,19 @@ func set_position(x, y) -> void:
 	_position_y = y
 
 
-func set_tile(tile: BaseTile) -> void:
+func set_tile(tile: BaseTile, delay: float = 0.0) -> void:
 	_tile = tile
 	
 	var new_position_x := _grid_to_pixel(_position_x)
 	var new_position_y := _grid_to_pixel(_position_y)
 	var new_position := Vector2(new_position_x, new_position_y)
 	
+	if _tile != null:
+		_tile.target_position = new_position
+		_tile.spawn_delay = delay
+	
 	if _tile != null and new_position != _tile.position:
-		_tile.move(_tile.position, new_position)
+		_tile.move()
 
 
 func set_neighbours(left: Cell, right: Cell, up: Cell, down: Cell) -> void:

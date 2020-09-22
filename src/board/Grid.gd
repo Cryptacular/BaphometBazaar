@@ -53,7 +53,9 @@ func _ready() -> void:
 			var time_scale = 0.3
 			var height_scale = (height - y) / floor(height)
 			var width_scale = (width - x) / floor(width)
-			get_tree().create_timer((height_scale + width_scale) * time_scale).connect("timeout", self, "spawn_tile", [x, y, tile_scene])
+			var spawn_delay = (height_scale + width_scale) * time_scale
+			
+			spawn_tile(x, y, tile_scene, spawn_delay)
 
 
 func _input(event: InputEvent):
@@ -77,12 +79,12 @@ func _screen_position_to_grid_position(pos: Vector2) -> Vector2:
 	return Vector2(x, y)
 
 
-func spawn_tile(x: int, y: int, tile: BaseTile) -> void:
+func spawn_tile(x: int, y: int, tile: BaseTile, delay: float = 0.0) -> void:
 	tile.position = Vector2(x * TILE_SIZE, -1 * TILE_SIZE)
 	add_child(tile)
 	
 	var cell := get_cell(x, y)
-	cell.set_tile(tile)
+	cell.set_tile(tile, delay)
 
 
 func swap(from: Vector2, to: Vector2) -> void:

@@ -4,12 +4,22 @@ extends Node2D
 class_name BaseTile
 
 export (String) var Type = ""
+var target_position: Vector2
+var spawn_delay: float = 0.0
+var state = states.INIT
+
+enum states {
+	INIT,
+	SPAWNING,
+	IDLE
+}
 
 
 func _ready() -> void:
-	var sprite = $AnimatedSprite
-	sprite.play("spawning")
-	sprite.connect("animation_finished", self, "_set_animation_idle")
+	assert(target_position != null)
+	state = states.SPAWNING
+	var sprite: AnimatedSprite = $AnimatedSprite
+	sprite.modulate = Color(1, 1, 1, 0)
 
 
 func _set_animation_idle():
@@ -20,12 +30,27 @@ func _set_animation_idle():
 	sprite.disconnect("animation_finished", self, "_set_animation_idle")
 
 
-func move(current_position: Vector2, target_position: Vector2) -> void:
+func spawn_in():
+	var sprite = $AnimatedSprite
+	sprite.modulate = Color(1, 1, 1, 1)
+	sprite.play("spawning")
+	sprite.connect("animation_finished", self, "_set_animation_idle")
+
+
+func move() -> void:
+	yield(get_tree().create_timer(spawn_delay), "timeout")
+	self.spawn_delay = 0.0
+	
+	if state == states.SPAWNING:
+		spawn_in()
+	
 	var tween = $MoveTween
-	tween.interpolate_property(self, "position", current_position, target_position, 0.3, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.interpolate_property(self, "position", self.position, target_position, 0.3, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	
 	if !tween.is_active():
 		tween.start()
+	
+	state = states.IDLE
 
 
 func swap_and_return(dir: String):
