@@ -12,12 +12,11 @@ onready var safe_area := OS.get_window_safe_area()
 onready var in_game_stats_width = $InGameStats.rect_size.x
 
 var grid_position: Vector2
+var game_over_overlay_scene = preload("res://src/board/GameOverOverlay.tscn")
+var game_over_overlay = null
 
 
 func _ready() -> void:
-	for element in [$InGameStats, $Orders, $Inventory]:
-		fade_in(element)
-	
 	$Orders.inventory = $Inventory
 	
 	$Grid.connect("tiles_matched", $Inventory, "on_tiles_matched")
@@ -29,6 +28,9 @@ func _ready() -> void:
 	
 	layout()
 	root.connect("size_changed", self, "on_root_size_changed")
+	
+	for element in [$Orders, $Inventory]:
+		fade_in(element)
 
 
 func fade_in(element: Node2D):
@@ -62,11 +64,19 @@ func layout():
 		in_game_stats.margin_left = offset_x_right - in_game_stats_width
 		orders.position.x = offset_x
 		inventory.position.x = offset_x
+	
+		if game_over_overlay != null:
+			game_over_overlay.margin_right = upscaled_size.x
+			game_over_overlay.margin_bottom = upscaled_size.y
 	else:
 		grid.position.x = GUTTER
 		orders.position.x = GUTTER
 		inventory.position.x = GUTTER
-
+		
+		if game_over_overlay != null:
+			game_over_overlay.margin_right = 1080
+			game_over_overlay.margin_bottom = 1920
+	
 	in_game_stats.margin_top = safe_area.position.y + GUTTER / 2
 	in_game_stats.margin_bottom = in_game_stats.margin_top + 80
 	orders.position.y += floor(safe_area.position.y * 0.75)
@@ -99,3 +109,13 @@ func screen_shake(_type: String, _amount: int) -> void:
 
 func _on_InGameStats_timeout():
 	emit_signal("gameover")
+	
+	game_over_overlay = game_over_overlay_scene.instance()
+	
+	game_over_overlay.margin_left = 0
+	game_over_overlay.margin_top = 0
+	game_over_overlay.margin_right = 1080
+	game_over_overlay.margin_bottom = 1920
+	
+	add_child(game_over_overlay)
+	layout()
