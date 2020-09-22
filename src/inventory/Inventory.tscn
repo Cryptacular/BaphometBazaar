@@ -3,6 +3,8 @@
 [ext_resource path="res://src/inventory/Inventory.gd" type="Script" id=1]
 [ext_resource path="res://src/board/SectionLabelFont.tres" type="DynamicFont" id=2]
 
+
+
 [node name="Inventory" type="Node2D"]
 script = ExtResource( 1 )
 

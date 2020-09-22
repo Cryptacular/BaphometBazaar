@@ -14,10 +14,12 @@
 [node name="TestLevel" instance=ExtResource( 5 )]
 
 [node name="Orders" parent="." index="1"]
+modulate = Color( 1, 1, 1, 0.692126 )
 order_types = [ ExtResource( 10 ) ]
 order_spawn_time_seconds = 5
 
 [node name="Inventory" parent="." index="2"]
+modulate = Color( 1, 1, 1, 0.692126 )
 available_tiles = [ ExtResource( 9 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ]
 
 [node name="Grid" parent="." index="3"]

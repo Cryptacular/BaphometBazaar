@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/fonts/TitleFont.tres" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/fonts/SecondaryFont.tres" type="DynamicFontData" id=2]
+[ext_resource path="res://src/menus/MainMenu.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+font_data = ExtResource( 2 )
+
+[node name="MainMenu" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Column" type="VBoxContainer" parent="."]
+margin_left = 159.0
+margin_top = 555.0
+margin_right = 920.0
+margin_bottom = 1364.0
+
+[node name="PreGameTitle" type="Label" parent="Column"]
+margin_right = 761.0
+margin_bottom = 66.0
+custom_fonts/font = SubResource( 1 )
+text = "welcome to..."
+align = 1
+
+[node name="GameTitle" type="Label" parent="Column"]
+margin_top = 70.0
+margin_right = 761.0
+margin_bottom = 201.0
+custom_fonts/font = SubResource( 2 )
+text = "Baphomet's Bazaar"
+align = 1
+
+[node name="Spacer" type="Control" parent="Column"]
+margin_top = 205.0
+margin_right = 761.0
+margin_bottom = 605.0
+rect_min_size = Vector2( 0, 400 )
+
+[node name="PlayButton" type="Button" parent="Column"]
+margin_top = 609.0
+margin_right = 761.0
+margin_bottom = 809.0
+rect_min_size = Vector2( 0, 200 )
+custom_fonts/font = SubResource( 3 )
+shortcut_in_tooltip = false
+text = "Play"
+flat = true
+[connection signal="pressed" from="Column/PlayButton" to="." method="_on_PlayButton_pressed"]

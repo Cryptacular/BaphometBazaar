@@ -44,8 +44,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="BaphometBazaar"
-run/main_scene="res://src/levels/TestLevel.tscn"
+config/name="Baphomet's Bazaar"
+run/main_scene="res://src/menus/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [display]
