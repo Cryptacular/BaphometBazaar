@@ -3,7 +3,7 @@
 [ext_resource path="res://src/board/InGameStats.gd" type="Script" id=1]
 
 [sub_resource type="DynamicFontData" id=1]
-font_path = "res://assets/fonts/selima/selima_.otf"
+font_path = "res://assets/fonts/Merienda_One/MeriendaOne-Regular.ttf"
 
 [sub_resource type="DynamicFont" id=2]
 size = 48

@@ -6,5 +6,5 @@
 [node name="Tooth" instance=ExtResource( 1 )]
 Type = "Tooth"
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" parent="SpriteContainer" index="0"]
 texture = ExtResource( 2 )

@@ -1,5 +1,5 @@
 tool
-extends Node2D
+extends VBoxContainer
 
 class_name InventoryItem
 
