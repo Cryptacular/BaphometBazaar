@@ -48,6 +48,10 @@ config/name="Baphomet's Bazaar"
 run/main_scene="res://src/menus/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+IngredientFactory="*res://src/factories/IngredientFactory.gd"
+
 [display]
 
 window/size/width=1080

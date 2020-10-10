@@ -8,8 +8,8 @@ enum states { INIT, IDLE, BUSY, GAMEOVER }
 
 export (int) var width
 export (int) var height
-export (Array, PackedScene) var available_tiles
 
+var available_tiles
 var state = states.INIT
 var _rows := []
 var drag_start := Vector2()
@@ -18,10 +18,12 @@ var drag_start := Vector2()
 func _ready() -> void:
 	assert(width != null and width > 0)
 	assert(height != null and height > 0)
-	assert(available_tiles != null and len(available_tiles) > 0)
 	
 	randomize()
-	
+
+
+func initialise() -> void:
+	assert(available_tiles != null and len(available_tiles) > 0)
 	state = states.IDLE
 	
 	var tiles_matched_timer := $TilesMovedTimer
@@ -209,7 +211,10 @@ func _refill_column(x: int) -> void:
 func _get_random_tile() -> BaseTile:
 	var number_of_tiles_available: int = available_tiles.size()
 	var rand := floor(rand_range(0, number_of_tiles_available))
-	return (available_tiles[rand]).instance()
+	var ingredient = available_tiles[rand]
+	var tile = IngredientFactory.get_tile(ingredient)
+	
+	return tile.instance()
 
 
 func _detect_matches() -> bool:

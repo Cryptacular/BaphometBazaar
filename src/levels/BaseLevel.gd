@@ -7,6 +7,8 @@ const SCREEN_RATIO = 16.0 / 9.0
 const GUTTER = 108
 const ACTIVE_AREA_WIDTH = 1080.0 - (108 * 2)
 
+export (Array, String) var available_ingredients
+
 onready var root := get_tree().get_root()
 onready var safe_area := OS.get_window_safe_area()
 onready var in_game_stats_width = $InGameStats.rect_size.x
@@ -17,19 +19,31 @@ var game_over_overlay = null
 
 
 func _ready() -> void:
-	$Orders.inventory = $Inventory
+	assert(available_ingredients != null and len(available_ingredients) > 0)
 	
-	$Grid.connect("tiles_matched", $Inventory, "on_tiles_matched")
-	$Grid.connect("tiles_matched", self, "screen_shake")
+	var grid = $Grid
+	var orders = $Orders
+	var inventory = $Inventory
+	var ingamestats = $InGameStats
 	
-	$Inventory.connect("inventory_updated", $Orders, "on_inventory_updated")
-	$Orders.connect("order_fulfilled", $Inventory, "on_order_fulfilled")
-	$Orders.connect("order_fulfilled", $InGameStats, "on_order_fulfilled")
+	grid.available_tiles = available_ingredients
+	inventory.available_tiles = available_ingredients
+	
+	grid.initialise()
+	inventory.initialise()
+	orders.inventory = inventory
+	
+	grid.connect("tiles_matched", inventory, "on_tiles_matched")
+	grid.connect("tiles_matched", self, "screen_shake")
+	
+	inventory.connect("inventory_updated", orders, "on_inventory_updated")
+	orders.connect("order_fulfilled", inventory, "on_order_fulfilled")
+	orders.connect("order_fulfilled", ingamestats, "on_order_fulfilled")
 	
 	layout()
 	root.connect("size_changed", self, "on_root_size_changed")
 	
-	for element in [$Orders, $Inventory]:
+	for element in [orders, inventory]:
 		fade_in(element)
 
 

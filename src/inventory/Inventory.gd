@@ -3,19 +3,20 @@ extends Node2D
 
 signal inventory_updated(items)
 
-export (Array, PackedScene) var available_tiles = []
+const TILE_SIZE := 16
+const GUTTER_SIZE := 4
 
-var TILE_SIZE := 16
-var GUTTER_SIZE := 4
+var available_tiles = []
 var tiles := []
 var state := {}
 
 
-func _ready() -> void:
+func initialise() -> void:
 	var i = 0
-	for scene in available_tiles:
+	
+	for ingredient in available_tiles:
+		var scene = IngredientFactory.get_inventory_item(ingredient)
 		var tile: InventoryItem = scene.instance()
-		#tile.position = Vector2(i * (TILE_SIZE + GUTTER_SIZE) * 4, 0)
 		
 		var type: String = tile.Type
 		tiles.append(tile)
@@ -26,10 +27,10 @@ func _ready() -> void:
 
 
 func on_tiles_matched(type: String, _amount: int) -> void:
-	if state[type] == null:
-		state[type] = 1
-	else:
+	if state.has(type):
 		state[type] += 1
+	else:
+		state[type] = 1
 	
 	notify_inventory_updated()
 	render()
