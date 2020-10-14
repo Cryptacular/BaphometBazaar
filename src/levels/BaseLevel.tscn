@@ -30,6 +30,6 @@ width = 9
 height = 9
 
 [node name="FadeInTween" type="Tween" parent="."]
-[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
 [connection signal="gameover" from="." to="Grid" method="_on_gameover"]
+[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
 [connection signal="timeout" from="InGameStats" to="." method="_on_InGameStats_timeout"]

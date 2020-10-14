@@ -30,6 +30,7 @@ var _tiles: Dictionary = {
 	Ingredients.Alkahest: preload("res://src/board/tiles/VialRoundTile.tscn"),
 	Ingredients.Tooth: preload("res://src/board/tiles/ToothTile.tscn"),
 	Ingredients.Blood: preload("res://src/board/tiles/VialAngularTile.tscn"),
+	Ingredients.Necronomicon: preload("res://src/board/tiles/NecronomiconTile.tscn"),
 }
 
 var _ingredients: Dictionary = {
@@ -48,6 +49,7 @@ var _inventory: Dictionary = {
 	Ingredients.Alkahest: preload("res://src/inventory/tiles/VialAngular.tscn"),
 	Ingredients.Tooth: preload("res://src/inventory/tiles/Tooth.tscn"),
 	Ingredients.Blood: preload("res://src/inventory/tiles/VialRound.tscn"),
+	Ingredients.Necronomicon: preload("res://src/inventory/tiles/Necronomicon.tscn"),
 }
 
 
@@ -58,7 +60,8 @@ func _generate_ingredients_dictionary() -> Dictionary:
 		"Bat",
 		"Alkahest",
 		"Tooth",
-		"Blood"
+		"Blood",
+		"Necronomicon"
 	]
 	
 	var dictionary: Dictionary = {}

@@ -4,7 +4,7 @@
 [ext_resource path="res://src/orders/types/DeathRattle.tscn" type="PackedScene" id=10]
 
 [node name="TestLevel" instance=ExtResource( 5 )]
-available_ingredients = [ "Bat", "Pentagram", "Tooth", "Alkahest", "Blood", "Tongue" ]
+available_ingredients = [ "Bat", "Pentagram", "Tooth", "Alkahest", "Necronomicon" ]
 
 [node name="Orders" parent="." index="1"]
 order_types = [ ExtResource( 10 ) ]
