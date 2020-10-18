@@ -214,7 +214,9 @@ func _get_random_tile() -> BaseTile:
 	var ingredient = available_tiles[rand]
 	var tile = IngredientFactory.get_tile(ingredient)
 	
-	return tile.instance()
+	var instance = tile.instance()
+	instance.Type = ingredient
+	return instance
 
 
 func _detect_matches() -> bool:

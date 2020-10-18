@@ -4,6 +4,7 @@
 [ext_resource path="res://assets/tiles/necronomicon_small.png" type="Texture" id=2]
 
 [node name="Necronomicon" instance=ExtResource( 1 )]
+Type = "Necronomicon"
 
 [node name="Sprite" parent="SpriteContainer" index="0"]
 texture = ExtResource( 2 )
