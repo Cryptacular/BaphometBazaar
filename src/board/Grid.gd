@@ -93,6 +93,10 @@ func swap(from: Vector2, to: Vector2) -> void:
 	if state != states.IDLE:
 		return
 	
+	for a in [from.x, from.y, to.x, to.y]:
+		if a < 0 or a >= width or a >= height:
+			return
+	
 	var x_movement = to.x - from.x
 	var y_movement = to.y - from.y
 	
