@@ -3,24 +3,28 @@
 [ext_resource path="res://tests/VisualTests.gd" type="Script" id=8]
 
 [node name="Node2D" type="Node2D"]
+scale = Vector2( 4, 4 )
 script = ExtResource( 8 )
 
 [node name="SpawnButton" type="Button" parent="."]
-margin_left = 567.921
-margin_top = 183.249
-margin_right = 681.921
-margin_bottom = 227.249
+margin_left = 14.75
+margin_top = 31.75
+margin_right = 128.75
+margin_bottom = 75.75
 text = "Spawn"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DeathButton" type="Button" parent="."]
-margin_left = 748.419
-margin_top = 183.249
-margin_right = 862.419
-margin_bottom = 227.249
+margin_left = 137.5
+margin_top = 32.5
+margin_right = 251.5
+margin_bottom = 76.5
 text = "Kill"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Tiles" type="Node2D" parent="."]
+position = Vector2( 24.25, 129 )

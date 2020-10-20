@@ -1,6 +1,6 @@
 extends Node2D
 
-var active_tiles: Array = []
+const TILE_GUTTER = 40
 
 
 func _ready() -> void:
@@ -11,51 +11,24 @@ func _ready() -> void:
 
 
 func _kill_tiles():
-	for tile in active_tiles:
+	for tile in $Tiles.get_children():
 		(tile as BaseTile).clear()
-	
-	active_tiles = []
 
 
 func _spawn_tiles():
 	_remove_tiles()
 	
-	var tiles = _list_files_in_directory("res://src/board/tiles")
+	var ingredients = IngredientFactory.Ingredients
 	
 	var i := 0
-	for tile in tiles:
-		if not tile.ends_with(".tscn"):
-			continue
-		
-		var t = load(tile).instance()
-		t.scale = Vector2(3, 3)
-		t.position = Vector2(32 * 4, 32 + 32 * 4 * i)
-		add_child(t)
-		active_tiles.append(t)
-		
+	for ingredient in ingredients:
+		var tile := IngredientFactory.get_tile(ingredient)
+		$Tiles.add_child(tile)
+		tile.spawn_in()
+		tile.position = Vector2((TILE_GUTTER * i) % (TILE_GUTTER * 10), i / 10 * TILE_GUTTER)
 		i += 1
 
 
 func _remove_tiles():
-	for tile in active_tiles:
+	for tile in $Tiles.get_children():
 		if tile != null: tile.queue_free()
-	
-	active_tiles = []
-
-
-func _list_files_in_directory(path):
-	var files = []
-	var dir = Directory.new()
-	dir.open(path)
-	dir.list_dir_begin()
-
-	while true:
-		var file = dir.get_next()
-		if file == "":
-			break
-		elif not file.begins_with("."):
-			files.append(path + "/" + file)
-
-	dir.list_dir_end()
-
-	return files
