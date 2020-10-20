@@ -34,7 +34,6 @@ margin_bottom = 74.0
 
 [node name="Orders" parent="." instance=ExtResource( 3 )]
 position = Vector2( 108, 221 )
-z_index = 1
 
 [node name="Inventory" parent="." instance=ExtResource( 7 )]
 position = Vector2( 108, 643 )
@@ -46,6 +45,6 @@ width = 9
 height = 9
 
 [node name="FadeInTween" type="Tween" parent="."]
-[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
 [connection signal="gameover" from="." to="Grid" method="_on_gameover"]
+[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
 [connection signal="timeout" from="InGameStats" to="." method="_on_InGameStats_timeout"]
