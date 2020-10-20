@@ -2,7 +2,7 @@ extends Node2D
 
 class_name BaseTile
 
-export (String) var Type = ""
+var Type: String
 var target_position: Vector2
 var spawn_delay: float = 0.0
 var state = states.INIT
@@ -15,6 +15,7 @@ enum states {
 
 
 func _ready() -> void:
+	assert(Type != null and len(Type) > 0)
 	assert(target_position != null)
 	state = states.SPAWNING
 	var sprite: AnimatedSprite = $AnimatedSprite

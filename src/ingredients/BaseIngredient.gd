@@ -1,7 +1,9 @@
 tool
-extends Sprite
+extends MarginContainer
 
-export (String) var Name
+class_name BaseIngredient
+
+var Type: String
 
 func _ready():
-	assert(Name != null and len(Name) > 0)
+	assert(Type != null and len(Type) > 0)

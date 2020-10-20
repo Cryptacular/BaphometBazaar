@@ -15,14 +15,12 @@ func initialise() -> void:
 	var i = 0
 	
 	for ingredient in available_tiles:
-		var scene = IngredientFactory.get_inventory_item(ingredient)
-		var tile: InventoryItem = scene.instance()
-		
-		var type: String = tile.Type
+		var tile = IngredientFactory.get_inventory_item(ingredient)
+
 		tiles.append(tile)
 		
 		$Rows/Items.add_child(tile)
-		state[type] = 0
+		state[ingredient] = 0
 		i += 1
 
 

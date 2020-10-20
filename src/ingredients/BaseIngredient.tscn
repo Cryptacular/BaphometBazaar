@@ -2,7 +2,14 @@
 
 [ext_resource path="res://src/ingredients/BaseIngredient.gd" type="Script" id=1]
 
-[node name="Ingredient" type="Sprite"]
+[node name="Ingredient" type="MarginContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 24, 24 )
 scale = Vector2( 3, 3 )
-script = ExtResource( 1 )

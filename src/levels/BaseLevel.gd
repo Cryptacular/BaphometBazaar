@@ -21,6 +21,9 @@ var game_over_overlay = null
 func _ready() -> void:
 	assert(available_ingredients != null and len(available_ingredients) > 0)
 	
+	for ingredient in available_ingredients:
+		assert(IngredientFactory.is_valid(ingredient))
+	
 	var grid = $Grid
 	var orders = $Orders
 	var inventory = $Inventory

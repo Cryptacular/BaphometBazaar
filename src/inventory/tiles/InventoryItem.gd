@@ -3,13 +3,12 @@ extends VBoxContainer
 
 class_name InventoryItem
 
-export (String) var Type
-
+var Type: String
 var _amount := 0 setget set_amount, get_amount
 
 
 func _ready() -> void:
-	assert(Type != null && len(Type) > 0)
+	assert(Type != null and len(Type) > 0)
 
 
 func _process(_delta) -> void:

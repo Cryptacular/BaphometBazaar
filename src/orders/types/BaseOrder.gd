@@ -8,7 +8,7 @@ signal order_expired(order)
 export (String) var order_name
 export (int) var worth
 export (int) var expiry_seconds
-export (Array, PackedScene) var ingredients = []
+export (Array, String) var ingredients = []
 export (Vector2) var target_position
 
 const PROGRESS_BAR_ANIMATION_FRAMES = 68
@@ -37,14 +37,14 @@ func _ready():
 	$Worth.text = "$" + str(worth)
 	
 	for i in len(ingredients):
-		var ing = ingredients[i].instance()
+		var type = ingredients[i]
+		var ing = IngredientFactory.get_ingredient(type)
 		$Ingredients.add_child(ing)
-		ing.position = Vector2(56 * i, 0)
 		
-		if !required_ingredients.has(ing.Name):
-			required_ingredients[ing.Name] = 1
+		if !required_ingredients.has(type):
+			required_ingredients[type] = 1
 		else:
-			required_ingredients[ing.Name] += 1
+			required_ingredients[type] += 1
 		
 	
 	_spawn()
