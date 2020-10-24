@@ -5,7 +5,7 @@ signal gameover
 
 const SCREEN_RATIO = 16.0 / 9.0
 const GUTTER = 108
-const ACTIVE_AREA_WIDTH = 1080.0 - (108 * 2)
+const ACTIVE_AREA_WIDTH = 1080.0 - (GUTTER * 2)
 
 export (Array, String) var available_ingredients
 
@@ -76,9 +76,9 @@ func layout():
 		var offset_x = GUTTER + floor((upscaled_size.x - 1080) / 2)
 		var offset_x_right = upscaled_size.x - offset_x
 		
-		grid.position.x = offset_x
+		in_game_stats.margin_left = offset_x
 		in_game_stats.margin_right = offset_x_right
-		in_game_stats.margin_left = offset_x_right - in_game_stats_width
+		grid.position.x = offset_x
 		orders.position.x = offset_x
 		inventory.position.x = offset_x
 	
@@ -86,6 +86,8 @@ func layout():
 			game_over_overlay.margin_right = upscaled_size.x
 			game_over_overlay.margin_bottom = upscaled_size.y
 	else:
+		in_game_stats.margin_left = GUTTER
+		in_game_stats.margin_right = GUTTER + ACTIVE_AREA_WIDTH
 		grid.position.x = GUTTER
 		orders.position.x = GUTTER
 		inventory.position.x = GUTTER
@@ -93,7 +95,6 @@ func layout():
 		if game_over_overlay != null:
 			game_over_overlay.margin_right = 1080
 			game_over_overlay.margin_bottom = 1920
-	
 	in_game_stats.margin_top = safe_area.position.y + GUTTER / 2
 	in_game_stats.margin_bottom = in_game_stats.margin_top + 80
 	orders.position.y += floor(safe_area.position.y * 0.75)
