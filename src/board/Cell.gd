@@ -2,6 +2,9 @@ extends Node
 
 class_name Cell
 
+signal tile_starts_being_dragged(x, y)
+signal tile_being_dragged(x, y)
+
 const TILE_SIZE := 32
 
 var _position_x: int
@@ -39,6 +42,7 @@ func is_marked_to_clear() -> bool:
 
 func mark_to_clear() -> void:
 	_marked_to_clear = true
+	remove_connections(_tile)
 
 
 func clear() -> void:
@@ -118,6 +122,9 @@ func set_position(x, y) -> void:
 
 
 func set_tile(tile: BaseTile, delay: float = 0.0) -> void:
+	remove_connections(_tile)
+	remove_connections(tile)
+	
 	_tile = tile
 	
 	var new_position_x := _grid_to_pixel(_position_x)
@@ -127,6 +134,8 @@ func set_tile(tile: BaseTile, delay: float = 0.0) -> void:
 	if _tile != null:
 		_tile.target_position = new_position
 		_tile.spawn_delay = delay
+		_tile.connect("start_dragging", self, "_on_tile_start_dragging")
+		_tile.connect("is_being_dragged", self, "_on_tile_dragged")
 	
 	if _tile != null and new_position != _tile.position:
 		_tile.move()
@@ -161,5 +170,23 @@ func swap_and_return(dir: String) -> void:
 	_tile.swap_and_return(dir)
 
 
+func _on_tile_start_dragging():
+	emit_signal("tile_starts_being_dragged", _position_x, _position_y)
+
+
+func _on_tile_dragged():
+	emit_signal("tile_being_dragged", _position_x, _position_y)
+
+
 func _grid_to_pixel(pos: int) -> int:
 	return pos * TILE_SIZE
+
+
+func remove_connections(tile: Node) -> void:
+	if tile == null:
+		return
+	
+	if tile.is_connected("start_dragging", self, "_on_tile_start_dragging"):
+		tile.disconnect("start_dragging", self, "_on_tile_start_dragging")
+	if tile.is_connected("is_being_dragged", self, "_on_tile_dragged"):
+		tile.disconnect("is_being_dragged", self, "_on_tile_dragged")

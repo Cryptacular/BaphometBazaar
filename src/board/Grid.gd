@@ -60,20 +60,6 @@ func initialise() -> void:
 			spawn_tile(x, y, tile_scene, spawn_delay)
 
 
-func _input(event: InputEvent):
-	if event is InputEventScreenTouch:
-		var pos = _screen_position_to_grid_position(event.position)
-		
-		if event.is_pressed():
-			drag_start = pos
-	
-	if event is InputEventScreenDrag:
-		var pos = _screen_position_to_grid_position(event.position)
-		
-		if pos != drag_start:
-			swap(drag_start, pos)
-
-
 func _screen_position_to_grid_position(pos: Vector2) -> Vector2:
 	var relative_pos = pos - position
 	var x := floor(relative_pos.x / scale.x / TILE_SIZE)
@@ -128,6 +114,7 @@ func swap(from: Vector2, to: Vector2) -> void:
 			from_cell.swap_and_return("up")
 			to_cell.swap_and_return("down")
 		
+		yield(get_tree().create_timer(0.2), "timeout")
 		post_move()
 
 
@@ -157,8 +144,22 @@ func set_cell(x: int, y: int, cell: Cell) -> void:
 		if right != null: right.set_left(cell)
 	
 	cell.set_neighbours(left, right, up, down)
+	cell.connect("tile_starts_being_dragged", self, "_on_tile_start_dragging")
+	cell.connect("tile_being_dragged", self, "_on_tile_dragged")
 
 	_rows[y][x] = cell
+
+
+func _on_tile_start_dragging(x: int, y: int):
+	var pos = Vector2(x, y)
+	drag_start = pos
+
+
+func _on_tile_dragged(x: int, y: int):
+	var pos = Vector2(x, y)
+	
+	if pos != drag_start:
+		swap(drag_start, pos)
 
 
 func clear_matches() -> void:

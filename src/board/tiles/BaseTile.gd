@@ -2,6 +2,9 @@ extends Node2D
 
 class_name BaseTile
 
+signal start_dragging
+signal is_being_dragged
+
 var Type: String
 var target_position: Vector2
 var spawn_delay: float = 0.0
@@ -74,3 +77,10 @@ func _kill() -> void:
 	var sprite = $AnimatedSprite
 	sprite.disconnect("animation_finished", self, "_kill")
 	queue_free()
+
+
+func _on_Area2D_input_event(_viewport: Node, event: InputEvent, _shape_idx: int):
+	if event is InputEventScreenTouch and event.is_pressed():
+		emit_signal("start_dragging")
+	elif event is InputEventScreenDrag:
+		emit_signal("is_being_dragged")
