@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Mystical House (Looped).ogg-e2c00ca7772733a45e6fdf51829ea565.oggstr"
+
+[deps]
+
+source_file="res://assets/music/Mystical House (Looped).ogg"
+dest_files=[ "res://.import/Mystical House (Looped).ogg-e2c00ca7772733a45e6fdf51829ea565.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
