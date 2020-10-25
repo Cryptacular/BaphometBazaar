@@ -41,7 +41,11 @@ func spawn_in():
 
 
 func move() -> void:
-	yield(get_tree().create_timer(spawn_delay), "timeout")
+	var tree = get_tree()
+	
+	if tree != null:
+		yield(get_tree().create_timer(spawn_delay), "timeout")
+	
 	self.spawn_delay = 0.0
 	
 	if state == states.SPAWNING:

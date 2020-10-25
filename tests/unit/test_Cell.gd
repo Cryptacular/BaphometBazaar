@@ -23,7 +23,7 @@ func test_would_match_neighbours_returns_false_if_no_matches_in_row():
 	cell_1.set_right(cell_2)
 	cell_2.set_left(cell_1)
 	
-	assert_false(cell_2.would_match_neighbours("Batwing"))
+	assert_false(cell_2.would_match_neighbours("Bat"))
 
 
 func test_would_match_neighbours_returns_true_if_matches_in_row():
@@ -42,7 +42,7 @@ func test_would_match_neighbours_returns_true_if_matches_in_row():
 	cell_1.set_right(cell_2)
 	cell_2.set_left(cell_1)
 	
-	assert_true(cell_2.would_match_neighbours("Batwing"))
+	assert_true(cell_2.would_match_neighbours("Bat"))
 
 
 func test_would_match_neighbours_returns_false_if_no_matches_in_column():
@@ -61,7 +61,7 @@ func test_would_match_neighbours_returns_false_if_no_matches_in_column():
 	cell_1.set_down(cell_2)
 	cell_2.set_up(cell_1)
 	
-	assert_false(cell_2.would_match_neighbours("Batwing"))
+	assert_false(cell_2.would_match_neighbours("Bat"))
 
 
 func test_would_match_neighbours_returns_true_if_matches_in_column():
@@ -80,4 +80,4 @@ func test_would_match_neighbours_returns_true_if_matches_in_column():
 	cell_1.set_down(cell_2)
 	cell_2.set_up(cell_1)
 	
-	assert_true(cell_2.would_match_neighbours("Batwing"))
+	assert_true(cell_2.would_match_neighbours("Bat"))
