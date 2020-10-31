@@ -1,0 +1,67 @@
+name: Export to Itch.io
+
+on: 
+  push:
+    branches:
+      - master
+
+env:
+  BUTLER_API_KEY: ${{ secrets.BUTLER_CREDENTIALS }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  BuildAndPublish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Download + Authorize Godot
+        run: |
+          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/3.2.3/Godot_v3.2.3-stable_linux_headless.64.zip
+          unzip godot.zip
+          mv Godot_v3.2.3-stable_linux_headless.64 godot
+          ls
+          chmod +x godot
+      - name: Download Export Templates
+        run: |
+          curl -L -o export_templates.zip https://downloads.tuxfamily.org/godotengine/3.2.3/Godot_v3.2.3-stable_export_templates.tpz
+          unzip export_templates.zip
+      - name: Install Export Templates
+        run: |
+          mkdir -p ~/.local/share/godot/templates/3.2.3.stable
+          mv ./templates/* ~/.local/share/godot/templates/3.2.3.stable
+      - name: Make Exports Folder
+        run: |
+          mkdir -p build
+      - name: Export Web Port
+        run: |
+          mkdir ./build/web
+          ./godot --path ./project.godot --export "HTML5" ./build/web/index.html
+      - name: Upload Exports
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+  PushExportsToItch:
+    needs: BuildAndPublish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Exports
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+          path: build
+      - name: Download + Authorize Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
+      - name: Login to Butler
+        run: ./butler login
+      - name: Compress Web Export
+        run: zip web.zip ./build/web/* -j
+      - name: Push Web Export To Itch
+        run: ./butler push ./web.zip Cryptacular/baphomet-bazaar:web
