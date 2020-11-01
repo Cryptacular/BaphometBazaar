@@ -13,7 +13,7 @@ size = 100
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 48
+size = 64
 font_data = ExtResource( 2 )
 
 [node name="MainMenu" type="CenterContainer"]
@@ -26,9 +26,9 @@ __meta__ = {
 
 [node name="Column" type="VBoxContainer" parent="."]
 margin_left = 159.0
-margin_top = 555.0
+margin_top = 401.0
 margin_right = 920.0
-margin_bottom = 1364.0
+margin_bottom = 1518.0
 
 [node name="PreGameTitle" type="Label" parent="Column"]
 margin_right = 761.0
@@ -60,4 +60,21 @@ custom_fonts/font = SubResource( 3 )
 shortcut_in_tooltip = false
 text = "Play"
 flat = true
+
+[node name="Spacer2" type="Control" parent="Column"]
+margin_top = 813.0
+margin_right = 761.0
+margin_bottom = 913.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="QuitButton" type="Button" parent="Column"]
+margin_top = 917.0
+margin_right = 761.0
+margin_bottom = 1117.0
+rect_min_size = Vector2( 0, 200 )
+custom_fonts/font = SubResource( 3 )
+shortcut_in_tooltip = false
+text = "Quit"
+flat = true
 [connection signal="pressed" from="Column/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Column/QuitButton" to="." method="_on_QuitButton_pressed"]
