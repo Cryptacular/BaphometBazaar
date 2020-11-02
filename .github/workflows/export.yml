@@ -35,6 +35,18 @@ jobs:
       - name: Make Exports Folder
         run: |
           mkdir -p build
+      - name: Export Windows Port
+        run: |
+          mkdir ./build/windows
+          ./godot --path ./project.godot --export "Windows" ./build/windows/BaphometBazaar.exe
+      - name: Export Mac Port
+        run: |
+          mkdir ./build/mac
+          ./godot --path ./project.godot --export "Mac" ./build/mac/BaphometBazaar.zip
+      - name: Export Linux Port
+        run: |
+          mkdir ./build/linux
+          ./godot --path ./project.godot --export "Linux" ./build/linux/BaphometBazaar.x86_64
       - name: Export Web Port
         run: |
           mkdir ./build/web
@@ -61,6 +73,12 @@ jobs:
           ./butler -V
       - name: Login to Butler
         run: ./butler login
+      - name: Push Windows Export To Itch
+        run: ./butler push ./build/windows/BaphometBazaar.exe Cryptacular/baphomet-bazaar:win
+      - name: Push Mac Export To Itch
+        run: ./butler push ./build/mac/BaphometBazaar.zip Cryptacular/baphomet-bazaar:mac
+      - name: Push Linux Export To Itch
+        run: ./butler push ./build/linux/BaphometBazaar.x86_64 Cryptacular/baphomet-bazaar:linux
       - name: Compress Web Export
         run: zip web.zip ./build/web/* -j
       - name: Push Web Export To Itch

@@ -58,11 +58,13 @@ config/icon="res://icon.png"
 
 IngredientFactory="*res://src/factories/IngredientFactory.gd"
 BackgroundMusic="*res://src/music/BackgroundMusic.tscn"
+GlobalShortcuts="*res://src/menus/GlobalShortcuts.gd"
 
 [display]
 
 window/size/width=1080
 window/size/height=1920
+window/size/fullscreen=true
 window/size/test_width=540
 window/size/test_height=960
 window/handheld/orientation="portrait"
@@ -72,6 +74,14 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PoolStringArray( "gut" )
+
+[input]
+
+ui_toggle_fullscreen={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [input_devices]
 
