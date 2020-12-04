@@ -1,17 +1,16 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/levels/BaseLevel.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/orders/types/DeathRattle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/recipes/types/DeathRattle.tscn" type="PackedScene" id=10]
 
 [node name="TestLevel" instance=ExtResource( 5 )]
 available_ingredients = [ "Bat", "Pentagram", "Tooth", "Alkahest", "Necronomicon" ]
 
 [node name="InGameStats" parent="." index="1"]
-max_moves = 5
+max_moves = 25
 
-[node name="Orders" parent="." index="2"]
-order_types = [ ExtResource( 10 ) ]
-order_spawn_time_seconds = 5
+[node name="Recipes" parent="." index="2"]
+recipe_types = [ ExtResource( 10 ) ]
 
 [node name="Grid" parent="." index="4"]
 width = 8

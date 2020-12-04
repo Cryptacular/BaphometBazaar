@@ -25,7 +25,7 @@ func _ready() -> void:
 		assert(IngredientFactory.is_valid(ingredient))
 	
 	var grid = $Grid
-	var orders = $Orders
+	var recipes = $Recipes
 	var inventory = $Inventory
 	var ingamestats = $InGameStats
 	
@@ -34,21 +34,21 @@ func _ready() -> void:
 	
 	grid.initialise()
 	inventory.initialise()
-	orders.inventory = inventory
+	recipes.inventory = inventory
 	
 	grid.connect("tiles_matched", inventory, "on_tiles_matched")
 	grid.connect("tiles_matched", self, "screen_shake")
 	grid.connect("valid_move_started", ingamestats, "valid_move_started")
 	grid.connect("valid_move_finished", ingamestats, "valid_move_finished")
 	
-	inventory.connect("inventory_updated", orders, "on_inventory_updated")
-	orders.connect("order_fulfilled", inventory, "on_order_fulfilled")
-	orders.connect("order_fulfilled", ingamestats, "on_order_fulfilled")
+	inventory.connect("inventory_updated", recipes, "on_inventory_updated")
+	recipes.connect("recipe_fulfilled", inventory, "on_recipe_fulfilled")
+	recipes.connect("recipe_fulfilled", ingamestats, "on_recipe_fulfilled")
 	
 	layout()
 	root.connect("size_changed", self, "on_root_size_changed")
 	
-	for element in [orders, inventory]:
+	for element in [recipes, inventory]:
 		fade_in(element)
 
 
@@ -69,7 +69,7 @@ func layout():
 	
 	var grid = $Grid
 	var in_game_stats = $InGameStats
-	var orders = $Orders
+	var recipes = $Recipes
 	var inventory = $Inventory
 	
 	if root.size.y / root.size.x < SCREEN_RATIO:
@@ -81,7 +81,7 @@ func layout():
 		in_game_stats.margin_left = offset_x
 		in_game_stats.margin_right = offset_x_right
 		grid.position.x = offset_x
-		orders.position.x = offset_x
+		recipes.position.x = offset_x
 		inventory.position.x = offset_x
 	
 		if game_over_overlay != null:
@@ -91,7 +91,7 @@ func layout():
 		in_game_stats.margin_left = GUTTER
 		in_game_stats.margin_right = GUTTER + ACTIVE_AREA_WIDTH
 		grid.position.x = GUTTER
-		orders.position.x = GUTTER
+		recipes.position.x = GUTTER
 		inventory.position.x = GUTTER
 		
 		if game_over_overlay != null:
@@ -99,7 +99,7 @@ func layout():
 			game_over_overlay.margin_bottom = 1920
 	in_game_stats.margin_top = safe_area.position.y + GUTTER / 2
 	in_game_stats.margin_bottom = in_game_stats.margin_top + 80
-	orders.position.y += floor(safe_area.position.y * 0.75)
+	recipes.position.y += floor(safe_area.position.y * 0.75)
 	inventory.position.y += floor(safe_area.position.y * 0.5)
 
 	var grid_width = 32 * grid.width

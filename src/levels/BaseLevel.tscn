@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/levels/BaseLevel.gd" type="Script" id=1]
 [ext_resource path="res://src/board/Grid.tscn" type="PackedScene" id=2]
-[ext_resource path="res://src/orders/Orders.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/recipes/Recipes.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/board/InGameStats.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/ingame_background.png" type="Texture" id=5]
 [ext_resource path="res://src/inventory/Inventory.tscn" type="PackedScene" id=7]
@@ -31,7 +31,7 @@ margin_left = 622.0
 margin_right = 972.0
 margin_bottom = 74.0
 
-[node name="Orders" parent="." instance=ExtResource( 3 )]
+[node name="Recipes" parent="." instance=ExtResource( 3 )]
 position = Vector2( 108, 221 )
 
 [node name="Inventory" parent="." instance=ExtResource( 7 )]
@@ -44,6 +44,6 @@ width = 9
 height = 9
 
 [node name="FadeInTween" type="Tween" parent="."]
-[connection signal="gameover" from="." to="Orders" method="_on_gameover"]
+[connection signal="gameover" from="." to="Recipes" method="_on_gameover"]
 [connection signal="gameover" from="." to="Grid" method="_on_gameover"]
 [connection signal="out_of_moves" from="InGameStats" to="." method="_on_InGameStats_out_of_moves"]

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/order_mockup.png-b7c7902f389d09a019b3a78f24b866ba.stex"
+path="res://.import/order_mockup.png-8271e6ce61d9b97c69a7e63ddab6b409.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/orders/order_mockup.png"
-dest_files=[ "res://.import/order_mockup.png-b7c7902f389d09a019b3a78f24b866ba.stex" ]
+source_file="res://assets/recipes/order_mockup.png"
+dest_files=[ "res://.import/order_mockup.png-8271e6ce61d9b97c69a7e63ddab6b409.stex" ]
 
 [params]
 

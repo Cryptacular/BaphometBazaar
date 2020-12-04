@@ -15,9 +15,9 @@ _global_script_classes=[ {
 "path": "res://src/ingredients/BaseIngredient.gd"
 }, {
 "base": "Area2D",
-"class": "BaseOrder",
+"class": "BaseRecipe",
 "language": "GDScript",
-"path": "res://src/orders/types/BaseOrder.gd"
+"path": "res://src/recipes/types/BaseRecipe.gd"
 }, {
 "base": "Node2D",
 "class": "BaseTile",
@@ -35,17 +35,17 @@ _global_script_classes=[ {
 "path": "res://src/inventory/tiles/InventoryItem.gd"
 }, {
 "base": "Node2D",
-"class": "Orders",
+"class": "Recipes",
 "language": "GDScript",
-"path": "res://src/orders/Orders.gd"
+"path": "res://src/recipes/Recipes.gd"
 } ]
 _global_script_class_icons={
 "BaseIngredient": "",
-"BaseOrder": "",
+"BaseRecipe": "",
 "BaseTile": "",
 "Cell": "",
 "InventoryItem": "",
-"Orders": ""
+"Recipes": ""
 }
 
 [application]

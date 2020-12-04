@@ -31,7 +31,7 @@ func on_tiles_matched(type: String, _amount: int) -> void:
 	render()
 
 
-func on_order_fulfilled(_order: BaseOrder, ingredients: Dictionary, _worth: int) -> void:
+func on_recipe_fulfilled(_recipe: BaseRecipe, ingredients: Dictionary, _worth: int) -> void:
 	for type in ingredients:
 		if state[type] == null:
 			return

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/progress_bar_0_100_jagged.png-abdf338ee506ad53c50370e0b7d59148.stex"
+path="res://.import/progress_bar_0_100_clean.png-70edd3d1a3e13ccf47b99ff9ff797a4e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/orders/progress_bar_0_100_jagged.png"
-dest_files=[ "res://.import/progress_bar_0_100_jagged.png-abdf338ee506ad53c50370e0b7d59148.stex" ]
+source_file="res://assets/recipes/progress_bar_0_100_clean.png"
+dest_files=[ "res://.import/progress_bar_0_100_clean.png-70edd3d1a3e13ccf47b99ff9ff797a4e.stex" ]
 
 [params]
 

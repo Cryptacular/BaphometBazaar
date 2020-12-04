@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/progress_bar_mask.png-2c6eb16aff4407a7658161c67131441d.stex"
+path="res://.import/order_ready.png-8558ed1d74d6e72809dbe6eac9970b86.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/orders/progress_bar_mask.png"
-dest_files=[ "res://.import/progress_bar_mask.png-2c6eb16aff4407a7658161c67131441d.stex" ]
+source_file="res://assets/recipes/order_ready.png"
+dest_files=[ "res://.import/order_ready.png-8558ed1d74d6e72809dbe6eac9970b86.stex" ]
 
 [params]
 

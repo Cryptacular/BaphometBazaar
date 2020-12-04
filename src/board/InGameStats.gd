@@ -12,7 +12,7 @@ func _ready():
 	$StatsContainer/Row/MovesRemaining/Label.text = str(remaining_moves)
 
 
-func on_order_fulfilled(_type, _ingredients, worth: int):
+func on_recipe_fulfilled(_type, _ingredients, worth: int):
 	money_earned += worth
 	var money_label = $StatsContainer/Row/Money/Label
 	money_label.text = str(money_earned)
