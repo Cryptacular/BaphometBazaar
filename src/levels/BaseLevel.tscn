@@ -28,7 +28,6 @@ __meta__ = {
 
 [node name="InGameStats" parent="." instance=ExtResource( 4 )]
 margin_left = 622.0
-margin_top = 0.0
 margin_right = 972.0
 margin_bottom = 74.0
 
@@ -45,6 +44,6 @@ width = 9
 height = 9
 
 [node name="FadeInTween" type="Tween" parent="."]
-[connection signal="gameover" from="." to="Grid" method="_on_gameover"]
 [connection signal="gameover" from="." to="Orders" method="_on_gameover"]
-[connection signal="timeout" from="InGameStats" to="." method="_on_InGameStats_timeout"]
+[connection signal="gameover" from="." to="Grid" method="_on_gameover"]
+[connection signal="out_of_moves" from="InGameStats" to="." method="_on_InGameStats_out_of_moves"]

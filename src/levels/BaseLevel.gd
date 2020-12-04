@@ -38,6 +38,8 @@ func _ready() -> void:
 	
 	grid.connect("tiles_matched", inventory, "on_tiles_matched")
 	grid.connect("tiles_matched", self, "screen_shake")
+	grid.connect("valid_move_started", ingamestats, "valid_move_started")
+	grid.connect("valid_move_finished", ingamestats, "valid_move_finished")
 	
 	inventory.connect("inventory_updated", orders, "on_inventory_updated")
 	orders.connect("order_fulfilled", inventory, "on_order_fulfilled")
@@ -125,7 +127,7 @@ func screen_shake(_type: String, _amount: int) -> void:
 	grid.position = grid_position
 
 
-func _on_InGameStats_timeout():
+func _on_InGameStats_out_of_moves():
 	emit_signal("gameover")
 	
 	game_over_overlay = game_over_overlay_scene.instance()

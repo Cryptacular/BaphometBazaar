@@ -1,16 +1,15 @@
 extends Control
 
-signal timeout
+signal out_of_moves
 
-export (int) var duration_seconds = 120
+export (int) var max_moves = 120
 
-onready var time_left: int = duration_seconds
+onready var remaining_moves: int = max_moves
 var money_earned := 0
 var money_increased_scene = preload("res://src/board/MoneyIncreasedIndicator.tscn")
 
 func _ready():
-	$StatsContainer/Row/TimeRemaining/Label.text = _format_time_remaining(time_left)
-	$Timer.connect("timeout", self, "_on_second_passed")
+	$StatsContainer/Row/MovesRemaining/Label.text = str(remaining_moves)
 
 
 func on_order_fulfilled(_type, _ingredients, worth: int):
@@ -24,20 +23,11 @@ func on_order_fulfilled(_type, _ingredients, worth: int):
 	add_child(money_increased)
 
 
-func _on_second_passed():
-	time_left -= 1
-	$StatsContainer/Row/TimeRemaining/Label.text = _format_time_remaining(time_left)
-	
-	if time_left == 0:
-		$Timer.disconnect("timeout", self, "_on_second_passed")
-		emit_signal("timeout")
+func valid_move_started():
+	remaining_moves -= 1
+	$StatsContainer/Row/MovesRemaining/Label.text = str(remaining_moves)
 
 
-func _format_time_remaining(total_seconds: int) -> String:
-	var minutes := floor(total_seconds / 60)
-	var seconds := total_seconds % 60
-	
-	if seconds < 10:
-		return str(minutes) + ":0" + str(seconds)
-	else:
-		return str(minutes) + ":" + str(seconds)
+func valid_move_finished():
+	if remaining_moves == 0:
+		emit_signal("out_of_moves")

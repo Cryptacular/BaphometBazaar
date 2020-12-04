@@ -11,6 +11,9 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="StatsContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -63,19 +66,19 @@ custom_fonts/font = ExtResource( 2 )
 text = "0"
 align = 2
 
-[node name="TimeRemaining" type="HBoxContainer" parent="StatsContainer/Row"]
+[node name="MovesRemaining" type="HBoxContainer" parent="StatsContainer/Row"]
 margin_left = 924.0
 margin_right = 1080.0
 margin_bottom = 70.0
 custom_constants/separation = 20
 alignment = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="StatsContainer/Row/TimeRemaining"]
+[node name="CenterContainer" type="CenterContainer" parent="StatsContainer/Row/MovesRemaining"]
 margin_right = 32.0
 margin_bottom = 70.0
 size_flags_vertical = 3
 
-[node name="Clock" type="TextureRect" parent="StatsContainer/Row/TimeRemaining/CenterContainer"]
+[node name="Clock" type="TextureRect" parent="StatsContainer/Row/MovesRemaining/CenterContainer"]
 margin_top = 19.0
 margin_right = 32.0
 margin_bottom = 51.0
@@ -84,7 +87,7 @@ texture = ExtResource( 4 )
 expand = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="StatsContainer/Row/TimeRemaining"]
+[node name="Label" type="Label" parent="StatsContainer/Row/MovesRemaining"]
 margin_left = 52.0
 margin_right = 156.0
 margin_bottom = 70.0
@@ -95,6 +98,3 @@ custom_fonts/font = ExtResource( 2 )
 text = "2:59"
 align = 2
 valign = 1
-
-[node name="Timer" type="Timer" parent="."]
-autostart = true

@@ -2,6 +2,8 @@ tool
 extends Node2D
 
 signal tiles_matched(type, amount)
+signal valid_move_started
+signal valid_move_finished
 
 const TILE_SIZE = 32
 enum states { INIT, IDLE, BUSY, GAMEOVER }
@@ -100,6 +102,7 @@ func swap(from: Vector2, to: Vector2) -> void:
 	if _would_match_after_swap(from, to):
 		_swap_tiles(from, to)
 		$TilesMovedTimer.start()
+		emit_signal("valid_move_started")
 	else:
 		if to.x - from.x > 0:
 			from_cell.swap_and_return("right")
@@ -179,6 +182,8 @@ func clear_matches() -> void:
 
 
 func post_move() -> void:
+	emit_signal("valid_move_finished")
+	
 	if state != states.GAMEOVER:
 		state = states.IDLE
 
