@@ -13,11 +13,6 @@ var state := {}
 
 func initialise() -> void:
 	for ingredient in available_tiles:
-		var tile = IngredientFactory.get_inventory_item(ingredient)
-
-		tiles.append(tile)
-		
-		$Rows/Items.add_child(tile)
 		state[ingredient] = 0
 
 
@@ -26,6 +21,11 @@ func on_tiles_matched(type: String, _amount: int) -> void:
 		state[type] += 1
 	else:
 		state[type] = 1
+	
+	if state[type] == 1:
+		var tile = IngredientFactory.get_inventory_item(type)
+		tiles.append(tile)
+		$Rows/Items.add_child(tile)
 	
 	notify_inventory_updated()
 	render()
