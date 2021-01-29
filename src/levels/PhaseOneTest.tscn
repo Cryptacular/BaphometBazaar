@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/levels/PhaseOneBase.tscn" type="PackedScene" id=1]
+
+[node name="PhaseOneTest" instance=ExtResource( 1 )]
+available_ingredients = [ "Bat", "Pentagram", "Tooth", "Alkahest", "Necronomicon" ]
+
+[node name="InGameStats" parent="." index="1"]
+max_moves = 25
+
+[node name="Grid" parent="." index="3"]
+width = 8
+height = 8
