@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/day_gauge_dial.png" type="Texture" id=1]
+[ext_resource path="res://assets/day_gauge_hand.png" type="Texture" id=2]
+[ext_resource path="res://assets/day_gauge_hand_shadow.png" type="Texture" id=3]
+[ext_resource path="res://src/board/Gauge.gd" type="Script" id=4]
+
+[node name="Gauge" type="Control"]
+margin_right = 192.0
+margin_bottom = 192.0
+rect_min_size = Vector2( 192, 192 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dial" type="TextureRect" parent="."]
+margin_right = -1.52588e-05
+margin_bottom = 192.0
+rect_min_size = Vector2( 192, 192 )
+texture = ExtResource( 1 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HandShadow" type="TextureRect" parent="."]
+margin_top = 6.0
+margin_right = -1.52588e-05
+margin_bottom = 198.0
+rect_min_size = Vector2( 192, 192 )
+rect_rotation = -25.0
+rect_pivot_offset = Vector2( 96, 96 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hand" type="TextureRect" parent="."]
+margin_right = -1.52588e-05
+margin_bottom = 192.0
+rect_min_size = Vector2( 192, 192 )
+rect_rotation = -25.0
+rect_pivot_offset = Vector2( 96, 96 )
+texture = ExtResource( 2 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RotateTween" type="Tween" parent="."]
