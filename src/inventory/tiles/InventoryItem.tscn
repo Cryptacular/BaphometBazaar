@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/inventory/tiles/InventoryItem.gd" type="Script" id=2]
 
@@ -9,6 +9,33 @@ font_path = "res://assets/fonts/Merienda_One/MeriendaOne-Regular.ttf"
 size = 36
 font_data = SubResource( 1 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "SlideUp"
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteContainer:margin_top")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.143587, 1 ),
+"update": 0,
+"values": [ 20.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AmountLabel:margin_top")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.133972, 0.217638 ),
+"update": 0,
+"values": [ 122.0, 68.0 ]
+}
+
 [node name="InventoryItem" type="VBoxContainer"]
 script = ExtResource( 2 )
 __meta__ = {
@@ -16,6 +43,7 @@ __meta__ = {
 }
 
 [node name="SpriteContainer" type="MarginContainer" parent="."]
+margin_top = 20.0
 margin_right = 64.0
 margin_bottom = 64.0
 rect_min_size = Vector2( 64, 64 )
@@ -25,7 +53,7 @@ scale = Vector2( 4, 4 )
 centered = false
 
 [node name="AmountLabel" type="Label" parent="."]
-margin_top = 68.0
+margin_top = 122.0
 margin_right = 64.0
 margin_bottom = 121.0
 custom_fonts/font = SubResource( 2 )
@@ -35,3 +63,8 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FadeInTween" type="Tween" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/SlideUp = SubResource( 3 )
