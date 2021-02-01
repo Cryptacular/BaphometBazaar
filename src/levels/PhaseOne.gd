@@ -17,6 +17,8 @@ var grid_position: Vector2
 var game_over_overlay_scene = preload("res://src/board/GameOverOverlay.tscn")
 var game_over_overlay = null
 
+var shake_amount = 20
+
 
 func _ready() -> void:
 	assert(available_ingredients != null and len(available_ingredients) > 0)
@@ -41,6 +43,8 @@ func _ready() -> void:
 	
 	layout()
 	root.connect("size_changed", self, "on_root_size_changed")
+	
+	$ShakeResetTimer.connect("timeout", self, "_reset_shake_amount")
 	
 	fade_in(inventory)
 
@@ -105,16 +109,34 @@ func on_root_size_changed() -> void:
 
 func screen_shake(_type: String, _amount: int) -> void:
 	var grid = $Grid
-	var shake_amount = 20
 	
 	for _i in range(4):
 		var x = randi() % shake_amount - (shake_amount / 2)
 		var y = randi() % shake_amount - (shake_amount / 2)
-		grid.position = grid_position + Vector2(x, y)
+		
+		var tween = $GridShakeTween
+		tween.interpolate_property(grid, "position", grid.position, grid_position + Vector2(x, y), 0.05, Tween.TRANS_LINEAR)
+		
+		if not tween.is_active():
+			tween.start()
 		
 		yield(get_tree().create_timer(0.1), "timeout")
 	
 	grid.position = grid_position
+	
+	shake_amount += 10
+	
+	_start_shake_reset_timer()
+
+
+func _start_shake_reset_timer() -> void:
+	var timer = $ShakeResetTimer
+	timer.wait_time = 0.5
+	timer.start()
+
+
+func _reset_shake_amount() -> void:
+	shake_amount = 20
 
 
 func _on_InGameStats_out_of_moves():

@@ -40,5 +40,11 @@ width = 9
 height = 9
 
 [node name="FadeInTween" type="Tween" parent="."]
+
+[node name="GridShakeTween" type="Tween" parent="."]
+
+[node name="ShakeResetTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
 [connection signal="gameover" from="." to="Grid" method="_on_gameover"]
 [connection signal="out_of_moves" from="InGameStats" to="." method="_on_InGameStats_out_of_moves"]
